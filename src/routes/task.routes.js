@@ -1,23 +1,19 @@
 const express = require('express')
+
+const TaskController = require('../controllers/task.controller')
 const TaskModel = require('../models/task.model')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    try{
-      const tasks = await TaskModel.find({});
-      res.status(200).send(tasks)
-    } catch(error){
-      console.error(error)
-      res.status(500).send(error.message)
-    }
+    return new TaskController(req, res).getTasks()
   })
   
   router.get('/:id', async (req,res) => {
     try{
       const taskId = req.params.id
   
-      const task = await TaskModel.findById(taskId)
+      const task = await TaskController.findById(taskId)
   
       if(!task){
         return res.status(404).send('Essa tarefa não foi encontrada')
