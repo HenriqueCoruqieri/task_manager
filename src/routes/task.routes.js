@@ -9,22 +9,8 @@ router.get('/', async (req, res) => {
     return new TaskController(req, res).getTasks()
   })
   
-  router.get('/:id', async (req,res) => {
-    try{
-      const taskId = req.params.id
-  
-      const task = await TaskController.findById(taskId)
-  
-      if(!task){
-        return res.status(404).send('Essa tarefa não foi encontrada')
-      }
-  
-      return res.status(200).send(task)
-  
-    } catch(error){
-      console.error(error)
-      res.status(500).send(error.message)
-    }
+  router.get('/:id', async (req, res) => {
+    return new TaskController(req, res).getTaskById()
   })
   
   router.post('/', async (req, res) =>{
