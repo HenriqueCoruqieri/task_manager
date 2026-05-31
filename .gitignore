@@ -1,3 +1,12 @@
 node_modules
-.env
 dist
+dist-ssr
+*.local
+.env
+logs
+*.log
+
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
