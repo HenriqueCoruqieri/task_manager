@@ -17,7 +17,7 @@ class UserController {
       this.res.status(200).send(user)
     } catch (error) {
       console.error(error)
-      this.res.status(500).send("Usuário não encontrado")
+      this.res.status(500).send(error.message)
     }
   }
 
@@ -51,7 +51,7 @@ class UserController {
       this.res.status(201).send(createUser)
     } catch (error) {
       console.error(error)
-      this.res.status(500).send("Não foi possível criar o usuário")
+      this.res.status(500).send(error.message)
     }
   }
 
@@ -87,6 +87,26 @@ class UserController {
 
       this.res.status(500).send(error.message)
     }
+  }
+
+  async delete() {
+    const userId = this.req.params.id
+
+    const userToDelete = await UserModel.findById(userId)
+
+    if (!userToDelete) {
+      return notFoundError(this.res)
+    }
+
+    const deletedUser = await UserModel.findByIdAndDelete(userId)
+
+    this.res.status(200).send(deletedUser)
+  }
+  catch(error) {
+    if (error instanceof mongoose.Error.CastError) {
+      return objectIdCastError(this.res)
+    }
+    this.res.status(500).send(error.message)
   }
 }
 

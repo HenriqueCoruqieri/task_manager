@@ -20,4 +20,8 @@ router.patch("/:id", async (req, res) => {
   return new UserController(req, res).update()
 })
 
+router.delete("/:id", async (req, res) => {
+  return new UserController(req, res).delete()
+})
+
 module.exports = router
