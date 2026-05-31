@@ -1,6 +1,8 @@
 const UserModel = require("../models/user.model")
-const { notFoundError, objectIdCastError } = require("../errors/mongodb.errors")
 const mongoose = require("mongoose")
+
+const { notFoundError, objectIdCastError } = require("../errors/mongodb.errors")
+const { notAllowedFieldsToUpdateError } = require("../errors/general.errors")
 
 class UserController {
   constructor(req, res) {
@@ -16,19 +18,6 @@ class UserController {
     } catch (error) {
       console.error(error)
       this.res.status(500).send("Usuário não encontrado")
-    }
-  }
-
-  async create() {
-    try {
-      const createUser = new UserModel(this.req.body)
-
-      await createUser.save()
-
-      this.res.status(201).send(createUser)
-    } catch (error) {
-      console.error(error)
-      this.res.status(500).send("Não foi possível criar o usuário")
     }
   }
 
@@ -50,6 +39,53 @@ class UserController {
 
       console.error(error)
       this.res.staus(500).send(error.message)
+    }
+  }
+
+  async create() {
+    try {
+      const createUser = new UserModel(this.req.body)
+
+      await createUser.save()
+
+      this.res.status(201).send(createUser)
+    } catch (error) {
+      console.error(error)
+      this.res.status(500).send("Não foi possível criar o usuário")
+    }
+  }
+
+  async update() {
+    try {
+      const userId = this.req.params.id
+      const userData = this.req.body
+
+      const userToUpdate = await UserModel.findById(userId)
+
+      if (!userToUpdate) {
+        return notFoundError(this.res)
+      }
+
+      const allowedUpdates = ["password"]
+      const requestedUpdates = Object.keys(userData)
+
+      for (const update of requestedUpdates) {
+        if (allowedUpdates.includes(update)) {
+          userToUpdate[update] = userData[update]
+        } else {
+          return notAllowedFieldsToUpdateError(this.res)
+        }
+      }
+
+      await userToUpdate.save()
+
+      return this.res.status(200).send(userToUpdate)
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        return objectIdCastError(this.res)
+      }
+
+      this.res.status(500).send(error.message)
     }
   }
 }
