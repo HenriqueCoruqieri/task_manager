@@ -1,8 +1,10 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const TaskRouter = require('./src/routes/task.routes')
+const express = require("express")
+const dotenv = require("dotenv")
 
-const connectToDatabase = require('./src/database/mongoose.database')
+const TaskRouter = require("./src/routes/task.routes")
+const UserRouter = require("./src/routes/user.routes")
+
+const connectToDatabase = require("./src/database/mongoose.database")
 
 dotenv.config()
 
@@ -11,6 +13,8 @@ app.use(express.json())
 
 connectToDatabase()
 
-app.use('/tasks', TaskRouter)
+app.use("/tasks", TaskRouter)
+
+app.use("/user", UserRouter)
 
 app.listen(8000, () => console.log("Listening on port 8000!"))
