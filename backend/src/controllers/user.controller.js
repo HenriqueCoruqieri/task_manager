@@ -1,4 +1,5 @@
 const UserModel = require("../models/user.model")
+const { notFoundError, objectIdCastError } = require("../errors/mongodb.errors")
 const mongoose = require("mongoose")
 
 class UserController {
@@ -28,6 +29,27 @@ class UserController {
     } catch (error) {
       console.error(error)
       this.res.status(500).send("Não foi possível criar o usuário")
+    }
+  }
+
+  async getById() {
+    try {
+      const userId = this.req.params.id
+
+      const user = await UserModel.findById(userId)
+
+      if (!user) {
+        return notFoundError(this.res)
+      }
+
+      return this.res.status(200).send(user)
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        return objectIdCastError(this.res)
+      }
+
+      console.error(error)
+      this.res.staus(500).send(error.message)
     }
   }
 }
