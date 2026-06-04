@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -8,7 +8,7 @@ const schema = z
   .object({
     firstName: z.string().min(1, "Nome é obrigatório"),
     lastName: z.string().min(1, "Sobrenome é obrigatório"),
-    email: z.string().min(1, "Email é obrigatório").email("Email inválido"),
+    email: z.string().min(1, "Email é obrigatório").email({ message: "Email inválido" }),
     password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
     confirmPassword: z.string().min(1, "Confirmação de senha é obrigatória"),
   })
@@ -19,6 +19,7 @@ const schema = z
 
 const RegisterButton = () => {
   const modal = useRef(null)
+  const [success, setSuccess] = useState(false)
 
   const {
     register,
@@ -27,10 +28,27 @@ const RegisterButton = () => {
     reset,
   } = useForm({ resolver: zodResolver(schema) })
 
-  const onSubmit = (data) => {
-    console.log("Dados do cadastro:", data)
-    modal.current.close()
-    reset()
+  const onSubmit = async (data) => {
+    const response = await fetch("http://localhost:8000/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
+      }),
+    })
+
+    if (response.ok) {
+      modal.current.close()
+      reset()
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 3000)
+    } else {
+      const error = await response.json()
+      console.error(error)
+    }
   }
 
   const handleOpen = () => {
@@ -40,6 +58,13 @@ const RegisterButton = () => {
 
   return (
     <div className="flex flex-col justify-center">
+      {success && (
+        <div className="toast toast-top toast-center z-50">
+          <div className="alert alert-success">
+            <span>Usuário cadastrado com sucesso!</span>
+          </div>
+        </div>
+      )}
       <button
         type="button"
         className="btn border-4 border-solid rounded-full"
