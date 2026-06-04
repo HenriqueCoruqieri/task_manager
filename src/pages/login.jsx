@@ -1,5 +1,6 @@
 import { UserRoundKey } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import RegisterButton from "../components/register-button"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -32,24 +33,18 @@ const Login = () => {
             className="input input-lg w-100"
           />
         </div>
-
-        <div className="flex flex-col space-y-2 mt-8">
-          <button
-            type="submit"
-            className="btn btn-success border-4 border-solid w-100 rounded-full text-white"
-          >
-            Login
-          </button>
-
-          <button
-            type="outline"
-            className="btn border-4 border-solid rounded-full"
-            onClick={() => navigate("/register")}
-          >
-            Cadastrar
-          </button>
-        </div>
       </form>
+
+      <div className="flex flex-col space-y-2 mt-8">
+        <button
+          type="submit"
+          className="btn btn-success border-4 border-solid w-100 rounded-full text-white"
+        >
+          Login
+        </button>
+
+        <RegisterButton />
+      </div>
     </div>
   )
 }
