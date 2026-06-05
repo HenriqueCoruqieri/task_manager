@@ -2,13 +2,16 @@ import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { NotebookPen } from "lucide-react"
+import { NotebookPen, X } from "lucide-react"
 
 const schema = z
   .object({
     firstName: z.string().min(1, "Nome é obrigatório"),
     lastName: z.string().min(1, "Sobrenome é obrigatório"),
-    email: z.string().min(1, "Email é obrigatório").email({ message: "Email inválido" }),
+    email: z
+      .string()
+      .min(1, "Email é obrigatório")
+      .email({ message: "Email inválido" }),
     password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
     confirmPassword: z.string().min(1, "Confirmação de senha é obrigatória"),
   })
@@ -75,9 +78,20 @@ const RegisterButton = () => {
 
       <dialog ref={modal} className="modal">
         <div className="modal-box">
-          <div className="flex gap-2">
-            <NotebookPen />
-            <h3 className="font-bold text-lg mb-4">Cadastro</h3>
+          <div className="flex justify-between">
+            <div className="flex gap-2 mt-1">
+              <NotebookPen />
+              <h3 className="font-bold text-lg mb-4">Cadastro</h3>
+            </div>
+
+            <div className="flex mb-8">
+              <button
+                className="btn btn-sm btn-circle rounded-full"
+                onClick={() => modal.current.close()}
+              >
+                <X />
+              </button>
+            </div>
           </div>
 
           <form
