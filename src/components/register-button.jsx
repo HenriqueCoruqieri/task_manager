@@ -60,7 +60,7 @@ const RegisterButton = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center w-full">
       {success && (
         <div className="toast toast-top toast-center z-50">
           <div className="alert alert-success">
@@ -70,7 +70,7 @@ const RegisterButton = () => {
       )}
       <button
         type="button"
-        className="btn border-4 border-solid rounded-full"
+        className="btn border-4 border-solid rounded-full w-full"
         onClick={handleOpen}
       >
         Cadastrar

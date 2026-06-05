@@ -139,7 +139,9 @@ class UserController {
         .setExpirationTime("1d")
         .sign(secret)
 
-      return this.res.status(200).json({ token })
+      return this.res
+        .status(200)
+        .json({ token, username: `${user.first_name}${user.last_name}` })
     } catch (error) {
       console.error(error)
       this.res.status(500).send(error.message)

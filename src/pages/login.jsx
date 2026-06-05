@@ -29,9 +29,9 @@ const Login = () => {
     })
 
     if (response.ok) {
-      const { token } = await response.json()
+      const { token, username } = await response.json()
       localStorage.setItem("token", token)
-      navigate("/dashboard")
+      navigate(`/${username}/dashboard`)
     }
   }
 
@@ -89,7 +89,7 @@ const Login = () => {
         </div>
       </form>
 
-      <div className="flex flex-col space-y-2 mt-2">
+      <div className="flex flex-col space-y-2 mt-2 w-100">
         <RegisterButton />
       </div>
     </div>
