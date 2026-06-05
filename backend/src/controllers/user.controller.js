@@ -1,7 +1,14 @@
+const bcrypt = require("bcryptjs")
+const { SignJWT } = require("jose")
+
 const UserModel = require("../models/user.model")
 const mongoose = require("mongoose")
 
-const { notFoundError, objectIdCastError } = require("../errors/mongodb.errors")
+const {
+  notFoundError,
+  objectIdCastError,
+  passwordError,
+} = require("../errors/mongodb.errors")
 const { notAllowedFieldsToUpdateError } = require("../errors/general.errors")
 
 class UserController {
@@ -107,6 +114,36 @@ class UserController {
       return objectIdCastError(this.res)
     }
     this.res.status(500).send(error.message)
+  }
+
+  async login() {
+    try {
+      const { email, password } = this.req.body
+
+      const user = await UserModel.findOne({ email })
+
+      if (!user) {
+        return notFoundError(this.res)
+      }
+
+      const passwordIsValid = await bcrypt.compare(password, user.password)
+
+      if (!passwordIsValid) {
+        passwordError()
+      }
+
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+
+      const token = await new SignJWT({ id: user._id.toString() })
+        .setProtectedHeader({ alg: "HS256" })
+        .setExpirationTime("1d")
+        .sign(secret)
+
+      return this.res.status(200).json({ token })
+    } catch (error) {
+      console.error(error)
+      this.res.status(500).send(error.message)
+    }
   }
 }
 

@@ -24,4 +24,8 @@ router.delete("/:id", async (req, res) => {
   return new UserController(req, res).delete()
 })
 
+router.post("/login", async (req, res) => {
+  return new UserController(req, res).login()
+})
+
 module.exports = router
