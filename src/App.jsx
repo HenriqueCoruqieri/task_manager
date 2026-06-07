@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./pages/login"
 import Dashboard from "./pages/dashboard"
-import { useParams } from "react-router-dom"
 
 function App() {
   return (
