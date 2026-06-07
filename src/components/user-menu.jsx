@@ -11,10 +11,10 @@ const UserMenu = () => {
         </summary>
         <ul className="menu dropdown-content font-semibold bg-emerald-600 z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
           <li>
-            <a>Home</a>
+            <a>Perfil</a>
           </li>
           <li>
-            <a>Perfil</a>
+            <a>Tarefas</a>
           </li>
           <li>
             <a>Configurações</a>

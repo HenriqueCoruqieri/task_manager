@@ -11,7 +11,7 @@ const Header = () => {
   }
 
   return (
-    <div className="navbar bg-emerald-700 shadow-sm">
+    <div className="navbar bg-emerald-600 shadow-sm">
       <div className="navbar-start">
         <Link to={`/${username}/dashboard`} className="btn btn-ghost text-xl">
           Home
