@@ -1,4 +1,4 @@
-const AvatarProfile = () => {
+const UserMenu = () => {
   return (
     <div>
       <details className="dropdown flex p-6">
@@ -25,4 +25,4 @@ const AvatarProfile = () => {
   )
 }
 
-export default AvatarProfile
+export default UserMenu

@@ -40,7 +40,7 @@ const Login = () => {
       <div className="flex justify-center mb-12">
         <img
           alt="Task Manager Logo"
-          src="task_manager.png"
+          src="/task_manager.png"
           className="w-[25%] h-[25%]"
         />
       </div>
