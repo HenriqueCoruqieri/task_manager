@@ -57,7 +57,6 @@ const NewTask = () => {
             <input
               {...register("title")}
               type="text"
-              placeholder="Dê um título para a tarefa"
               className="input input-md w-full border border-emerald-500"
             />
             {errors.title && (
@@ -72,7 +71,6 @@ const NewTask = () => {
             <input
               {...register("description")}
               type="text"
-              placeholder="Descreva a tarefa"
               className="input input-md w-full border border-emerald-500"
             />
             {errors.description && (
