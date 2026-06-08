@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import UserMenu from "../components/user-menu"
 import Header from "../components/header"
 import Footer from "../components/footer"
+import TaskBook from "../components/taskBook/task-book"
 
 const Dashboard = () => {
   const { username } = useParams()
@@ -18,8 +19,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center mt-20">
-          <h1>BOOK DE TAREFAS</h1>
+        <div className="flex flex-col items-center mt-12">
+          <TaskBook />
         </div>
       </div>
 

@@ -65,7 +65,7 @@ class TaskController {
         return notFoundError(this.res)
       }
 
-      const allowedUpdates = ["isCompleted"]
+      const allowedUpdates = ["title", "description", "isCompleted"]
       const requestedUpdates = Object.keys(taskData)
 
       for (const update of requestedUpdates) {
