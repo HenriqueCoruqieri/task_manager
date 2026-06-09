@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { PencilLine, X } from "lucide-react"
+import { PencilLine, Trash2, X } from "lucide-react"
 
 const schema = z.object({
   title: z.string().min(1, "Informe o novo título da tarefa"),
@@ -61,6 +61,19 @@ const TaskList = () => {
     }
   }
 
+  const handleDelete = async (taskId) => {
+    const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+      method: "DELETE",
+    })
+
+    if (response.ok) {
+      setTasks((current) => current.filter((t) => t._id !== taskId))
+    } else {
+      const error = await response.json()
+      console.error(error)
+    }
+  }
+
   const handleComplete = async () => {
     await Promise.all(
       selectedTask.map((id) =>
@@ -86,7 +99,7 @@ const TaskList = () => {
         {tasks.map((task, index) => (
           <li key={task._id} className="flex items-center gap-4">
             <button
-              className="btn btn-sm border-2 border-white border-solid rounded-xl"
+              className="btn btn-sm text-yellow-500 border-3 border-solid rounded-xl"
               onClick={() => handleEdit(task)}
             >
               <PencilLine />
@@ -116,6 +129,12 @@ const TaskList = () => {
                 />
               </div>
             </div>
+            <button
+              className="btn btn-sm text-red-500 border-3 border-solid rounded-xl"
+              onClick={() => handleDelete(task._id)}
+            >
+              <Trash2 />
+            </button>
           </li>
         ))}
       </ul>
