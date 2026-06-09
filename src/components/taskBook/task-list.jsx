@@ -61,6 +61,21 @@ const TaskList = () => {
     }
   }
 
+  const handleComplete = async () => {
+    await Promise.all(
+      selectedTask.map((id) =>
+        fetch(`http://localhost:8000/tasks/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ isCompleted: true }),
+        })
+      )
+    )
+
+    setTasks((current) => current.filter((t) => !selectedTask.includes(t._id)))
+    setSelectedTask([])
+  }
+
   return (
     <div className="min-w-[500px]">
       <ul className="list rounded-box space-y-4">
@@ -109,6 +124,7 @@ const TaskList = () => {
         <button
           disabled={selectedTask.length === 0}
           className="btn btn-success rounded-md w-[150px] ml-19"
+          onClick={handleComplete}
         >
           Concluir
         </button>
