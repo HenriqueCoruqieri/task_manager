@@ -1,4 +1,8 @@
+import { Link, useParams } from "react-router-dom"
+
 const UserMenu = () => {
+  const { username } = useParams()
+
   return (
     <div>
       <details className="dropdown flex p-6">
@@ -11,13 +15,13 @@ const UserMenu = () => {
         </summary>
         <ul className="menu dropdown-content font-semibold bg-emerald-600 z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
           <li>
-            <a>Perfil</a>
+            <Link to={`/${username}/dashboard/profile`}>Perfil</Link>
           </li>
           <li>
-            <a>Tarefas</a>
+            <a>Conta</a>
           </li>
           <li>
-            <a>Configurações</a>
+            <a>Tarefas concluídas</a>
           </li>
         </ul>
       </details>
