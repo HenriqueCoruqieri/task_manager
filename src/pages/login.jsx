@@ -29,8 +29,9 @@ const Login = () => {
     })
 
     if (response.ok) {
-      const { token, username } = await response.json()
+      const { token, username, id } = await response.json()
       localStorage.setItem("token", token)
+      localStorage.setItem("userId", id)
       navigate(`/${username}/dashboard`)
     }
   }

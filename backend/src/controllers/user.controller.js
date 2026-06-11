@@ -141,7 +141,11 @@ class UserController {
 
       return this.res
         .status(200)
-        .json({ token, username: `${user.first_name}${user.last_name}` })
+        .json({
+          token,
+          username: `${user.first_name}${user.last_name}`,
+          id: user._id,
+        })
     } catch (error) {
       console.error(error)
       this.res.status(500).send(error.message)
