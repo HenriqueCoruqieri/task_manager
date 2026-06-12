@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
+import EditImageModal from "../components/edit-image-modal"
+
 import { Camera } from "lucide-react"
 
 const Profile = () => {
   const [userData, setUserData] = useState(null)
+  const dialogRef = useRef(null)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,6 +22,23 @@ const Profile = () => {
     fetchUser()
   }, [])
 
+  const handleSaveImage = async (imageUrl) => {
+    const userId = localStorage.getItem("userId")
+    const response = await fetch(`http://localhost:8000/user/${userId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_url: imageUrl }),
+    })
+
+    if (response.ok) {
+      const updatedUser = await response.json()
+      setUserData(updatedUser)
+    } else {
+      const error = await response.json()
+      console.error(error)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -26,14 +46,17 @@ const Profile = () => {
 
       <div className="flex flex-1 flex-col items-center justify-center mb-40">
         <div className="flex  mr-55">
-          <button className="btn btn-circle text-emerald-500 shadow-2xl">
+          <button
+            className="btn btn-circle text-emerald-500 shadow-2xl"
+            onClick={() => dialogRef.current.showModal()}
+          >
             <Camera />
           </button>
         </div>
 
         <div className="avatar">
           <div className="w-24 rounded-xl min-w-[200px] min-h-[200px] border-emerald-500 border-2 ">
-            <img src="https://img.daisyui.com/images/profile/demo/yellingwoman@192.webp" />
+            <img src={userData?.image_url} />
           </div>
         </div>
 
@@ -53,6 +76,8 @@ const Profile = () => {
           <button className="btn btn-success">Trocar senha</button>
         </div>
       </div>
+
+      <EditImageModal dialogRef={dialogRef} onSave={handleSaveImage} />
 
       <Footer />
     </div>

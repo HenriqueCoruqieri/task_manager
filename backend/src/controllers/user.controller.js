@@ -73,7 +73,7 @@ class UserController {
         return notFoundError(this.res)
       }
 
-      const allowedUpdates = ["password, image_url"]
+      const allowedUpdates = ["password", "image_url"]
       const requestedUpdates = Object.keys(userData)
 
       for (const update of requestedUpdates) {

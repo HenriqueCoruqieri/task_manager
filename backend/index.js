@@ -11,7 +11,7 @@ dotenv.config()
 
 const app = express()
 app.use(cors({ origin: "http://localhost:5173" }))
-app.use(express.json())
+app.use(express.json({ limit: "5mb" }))
 
 connectToDatabase()
 

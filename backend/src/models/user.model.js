@@ -25,7 +25,7 @@ const UserSchema = Schema({
 
   image_url: {
     type: String,
-    default: "default_profile.png",
+    default: "/default_profile.png",
   },
 })
 
