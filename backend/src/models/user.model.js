@@ -22,6 +22,11 @@ const UserSchema = Schema({
     type: String,
     required: true,
   },
+
+  image_url: {
+    type: String,
+    default: "default_profile.png",
+  },
 })
 
 UserSchema.pre("save", async function () {
