@@ -4,12 +4,14 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import EditImageModal from "../components/edit-image-modal"
+import EditPasswordModal from "../components/edit-modal-pawword"
 
 import { Camera } from "lucide-react"
 
 const Profile = () => {
   const [userData, setUserData] = useState(null)
-  const dialogRef = useRef(null)
+  const imageDialogRef = useRef(null)
+  const passwordDialogRef = useRef(null)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +41,20 @@ const Profile = () => {
     }
   }
 
+  const handleSavePassword = async (password) => {
+    const userId = localStorage.getItem("userId")
+    const response = await fetch(`http://localhost:8000/user/${userId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      console.error(error)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -48,7 +64,7 @@ const Profile = () => {
         <div className="flex  mr-55">
           <button
             className="btn btn-circle text-emerald-500 shadow-2xl"
-            onClick={() => dialogRef.current.showModal()}
+            onClick={() => imageDialogRef.current.showModal()}
           >
             <Camera />
           </button>
@@ -73,11 +89,20 @@ const Profile = () => {
         </div>
 
         <div className="mt-8">
-          <button className="btn btn-success">Trocar senha</button>
+          <button
+            className="btn btn-success"
+            onClick={() => passwordDialogRef.current.showModal()}
+          >
+            Trocar senha
+          </button>
         </div>
       </div>
 
-      <EditImageModal dialogRef={dialogRef} onSave={handleSaveImage} />
+      <EditImageModal dialogRef={imageDialogRef} onSave={handleSaveImage} />
+      <EditPasswordModal
+        dialogRef={passwordDialogRef}
+        onSave={handleSavePassword}
+      />
 
       <Footer />
     </div>
