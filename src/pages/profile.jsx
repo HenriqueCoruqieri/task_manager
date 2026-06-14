@@ -1,28 +1,18 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import EditImageModal from "../components/edit-image-modal"
-import EditPasswordModal from "../components/edit-modal-pawword"
+import EditPasswordModal from "../components/edit-password-modal"
+import { useUser } from "../context/user-context"
 
 import { Camera } from "lucide-react"
 
 const Profile = () => {
-  const [userData, setUserData] = useState(null)
+  const { userData, setUserData } = useUser()
   const imageDialogRef = useRef(null)
   const passwordDialogRef = useRef(null)
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userId = localStorage.getItem("userId")
-      const response = await fetch(`http://localhost:8000/user/${userId}`)
-      const data = await response.json()
-      setUserData(data)
-    }
-
-    fetchUser()
-  }, [])
 
   const handleSaveImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
@@ -72,7 +62,7 @@ const Profile = () => {
 
         <div className="avatar">
           <div className="w-24 rounded-xl min-w-[200px] min-h-[200px] border-emerald-500 border-2 ">
-            <img src={userData?.image_url} />
+            <img src={userData?.image_url || "/default_profile.png"} />
           </div>
         </div>
 

@@ -1,7 +1,9 @@
 import { Link, useParams } from "react-router-dom"
+import { useUser } from "../context/user-context"
 
 const UserMenu = () => {
   const { username } = useParams()
+  const { userData } = useUser()
 
   return (
     <div>
@@ -9,7 +11,7 @@ const UserMenu = () => {
         <summary className="btn btn-circle">
           <div className="avatar">
             <div className="ring-emerald-600 ring-offset-base-100 w-14 rounded-full ring-2 ring-offset-2">
-              <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+              <img src={userData?.image_url || "/default_profile.png"} />
             </div>
           </div>
         </summary>
