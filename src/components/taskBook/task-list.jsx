@@ -95,11 +95,10 @@ const TaskList = () => {
 
   return (
     <div className="min-w-[500px]">
-      <ul className="list rounded-box space-y-4">
-        <li className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
-          Lista de Tarefas
-        </li>
-
+      <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
+        Lista de Tarefas
+      </p>
+      <ul className="list rounded-box max-h-[50vh] overflow-y-auto pr-2 mt-1 space-y-4">
         {tasks.map((task, index) => (
           <li key={task._id} className="flex items-center gap-4">
             <button

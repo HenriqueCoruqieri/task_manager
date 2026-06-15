@@ -34,7 +34,7 @@ const CompletedTasks = () => {
             </h1>
             <SquareCheckBig className="mt-2 text-emerald-500" />
           </div>
-          <ul className="list rounded-box space-y-4 max-h-[60vh] overflow-y-auto w-full max-w-[500px] mt-4">
+          <ul className="list rounded-box space-y-4 max-h-[60vh] overflow-y-auto pr-2 w-full max-w-[500px] mt-4">
             {tasks.map((task, index) => (
               <li key={task._id}>
                 <TaskCard task={task} index={index} />
