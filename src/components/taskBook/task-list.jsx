@@ -4,6 +4,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { PencilLine, Trash2, X } from "lucide-react"
+import TaskCard from "../task-card"
 
 const schema = z.object({
   title: z.string().min(1, "Informe o novo título da tarefa"),
@@ -23,7 +24,7 @@ const TaskList = () => {
         `http://localhost:8000/tasks?user_id=${userId}`
       )
       const data = await response.json()
-      setTasks(data)
+      setTasks(data.filter((task) => !task.isCompleted))
     }
 
     fetchTasks()
@@ -107,31 +108,18 @@ const TaskList = () => {
             >
               <PencilLine />
             </button>
-            <div className="list-row flex-1 bg-emerald-600">
-              <div className="text-4xl font-thin opacity-30 tabular-nums">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-              <div className="list-col-grow">
-                <h1 className="font-bold uppercase">{task.title}</h1>
-                <h3 className="text-xs font-semibold opacity-60">
-                  {task.description}
-                </h3>
-              </div>
-              <div className="mt-2">
-                <input
-                  className="checkbox checkbox-neutral"
-                  type="checkbox"
-                  checked={selectedTask.includes(task._id)}
-                  onChange={() =>
-                    setSelectedTask((current) =>
-                      current.includes(task._id)
-                        ? current.filter((id) => id !== task._id)
-                        : [...current, task._id]
-                    )
-                  }
-                />
-              </div>
-            </div>
+            <TaskCard
+              task={task}
+              index={index}
+              isSelected={selectedTask.includes(task._id)}
+              onToggleSelect={() =>
+                setSelectedTask((current) =>
+                  current.includes(task._id)
+                    ? current.filter((id) => id !== task._id)
+                    : [...current, task._id]
+                )
+              }
+            />
             <button
               className="btn btn-sm text-red-500 border-3 border-solid rounded-xl"
               onClick={() => handleDelete(task._id)}
