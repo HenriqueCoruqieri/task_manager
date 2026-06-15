@@ -20,7 +20,7 @@ const UserMenu = () => {
             <Link to={`/${username}/dashboard/profile`}>Perfil</Link>
           </li>
           <li>
-            <a>Conta</a>
+            <Link to={`/${username}/dashboard/account`}>Conta</Link>
           </li>
           <li>
             <a>Tarefas concluídas</a>

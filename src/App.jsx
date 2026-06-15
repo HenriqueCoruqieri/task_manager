@@ -3,6 +3,7 @@ import { UserProvider } from "./context/user-context"
 import Login from "./pages/login"
 import Dashboard from "./pages/dashboard"
 import Profile from "./pages/profile"
+import Account from "./pages/account"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/:username/dashboard" element={<Dashboard />} />
           <Route path="/:username/dashboard/profile" element={<Profile />} />
+          <Route path="/:username/dashboard/account" element={<Account />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
