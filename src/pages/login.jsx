@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import { UserRoundKey } from "lucide-react"
 
-import RegisterButton from "../components/register-button"
+import RegisterButton from "../components/modals/register-button"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
