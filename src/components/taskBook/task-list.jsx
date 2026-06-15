@@ -18,7 +18,10 @@ const TaskList = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const response = await fetch("http://localhost:8000/tasks")
+      const userId = localStorage.getItem("userId")
+      const response = await fetch(
+        `http://localhost:8000/tasks?user_id=${userId}`
+      )
       const data = await response.json()
       setTasks(data)
     }

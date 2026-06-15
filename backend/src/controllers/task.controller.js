@@ -12,7 +12,10 @@ class TaskController {
 
   async getAll() {
     try {
-      const tasks = await TaskModel.find({})
+      const { user_id } = this.req.query
+      const filter = user_id ? { user_id } : {}
+
+      const tasks = await TaskModel.find(filter)
       this.res.status(200).send(tasks)
     } catch (error) {
       console.error(error)
