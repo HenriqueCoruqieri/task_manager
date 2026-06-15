@@ -19,10 +19,12 @@ const NewTask = () => {
   } = useForm({ resolver: zodResolver(schema) })
 
   const onSubmit = async (data) => {
+    const userId = localStorage.getItem("userId")
+
     const response = await fetch("http://localhost:8000/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, user_id: userId }),
     })
 
     if (response.ok) {
