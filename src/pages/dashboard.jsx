@@ -15,7 +15,7 @@ const Dashboard = () => {
         <div className="flex">
           <UserMenu />
           <div className="mt-4">
-            <h1 className="text-white font-bold"> Henrique Oliveira</h1>
+            {/*<h1 className="text-white font-bold"> Henrique Oliveira</h1>*/}
           </div>
         </div>
 

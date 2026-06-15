@@ -6,10 +6,10 @@ const UserMenu = () => {
   const { userData } = useUser()
 
   return (
-    <div>
+    <div className="flex">
       <details className="dropdown flex p-6">
         <summary className="btn btn-circle">
-          <div className="avatar">
+          <div className="avatar gap-2">
             <div className="ring-emerald-600 ring-offset-base-100 w-14 rounded-full ring-2 ring-offset-2">
               <img src={userData?.image_url || "/default_profile.png"} />
             </div>
@@ -27,6 +27,14 @@ const UserMenu = () => {
           </li>
         </ul>
       </details>
+
+      <div className="mt-4">
+        {userData && (
+          <h1 className="text-white font-bold">
+            {userData.first_name} {userData.last_name}
+          </h1>
+        )}
+      </div>
     </div>
   )
 }
