@@ -1,12 +1,17 @@
+import { useUser } from "../context/user-context"
+
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { LogOut } from "lucide-react"
 
 const Header = () => {
   const { username } = useParams()
+  const { setUserData } = useUser()
   const navigate = useNavigate()
 
   const handleLogout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("userId")
+    setUserData(null)
     navigate("/")
   }
 

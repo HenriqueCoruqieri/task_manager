@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { UserRoundKey } from "lucide-react"
 
 import RegisterButton from "../components/modals/register-button"
+import { useUser } from "../context/user-context"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
@@ -14,6 +15,7 @@ const schema = z.object({
 
 const Login = () => {
   const navigate = useNavigate()
+  const { fetchUser } = useUser()
 
   const {
     register,
@@ -32,6 +34,7 @@ const Login = () => {
       const { token, username, id } = await response.json()
       localStorage.setItem("token", token)
       localStorage.setItem("userId", id)
+      await fetchUser()
       navigate(`/${username}/dashboard`)
     }
   }
