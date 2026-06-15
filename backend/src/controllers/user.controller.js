@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs")
 const { SignJWT } = require("jose")
 
 const UserModel = require("../models/user.model")
+const TaskModel = require("../models/task.model")
+
 const mongoose = require("mongoose")
 
 const {
@@ -104,6 +106,8 @@ class UserController {
     if (!userToDelete) {
       return notFoundError(this.res)
     }
+
+    await TaskModel.deleteMany({ user_id: userId })
 
     const deletedUser = await UserModel.findByIdAndDelete(userId)
 
