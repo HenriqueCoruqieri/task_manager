@@ -21,7 +21,7 @@ const schema = z
   })
 
 const RegisterButton = () => {
-  const modal = useRef(null)
+  const registerModal = useRef(null)
   const [success, setSuccess] = useState(false)
 
   const {
@@ -44,7 +44,7 @@ const RegisterButton = () => {
     })
 
     if (response.ok) {
-      modal.current.close()
+      registerModal.current.close()
       reset()
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
@@ -56,7 +56,7 @@ const RegisterButton = () => {
 
   const handleOpen = () => {
     reset()
-    modal.current.showModal()
+    registerModal.current.showModal()
   }
 
   return (
@@ -76,7 +76,7 @@ const RegisterButton = () => {
         Cadastrar
       </button>
 
-      <dialog ref={modal} className="modal">
+      <dialog ref={registerModal} className="modal">
         <div className="modal-box">
           <div className="flex justify-between">
             <div className="flex gap-2 mt-1">
@@ -87,7 +87,7 @@ const RegisterButton = () => {
             <div className="flex mb-8">
               <button
                 className="btn btn-sm btn-circle rounded-full"
-                onClick={() => modal.current.close()}
+                onClick={() => registerModal.current.close()}
               >
                 <X />
               </button>
