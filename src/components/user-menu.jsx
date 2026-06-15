@@ -23,7 +23,9 @@ const UserMenu = () => {
             <Link to={`/${username}/dashboard/account`}>Conta</Link>
           </li>
           <li>
-            <a>Tarefas concluídas</a>
+            <Link to={`/${username}/dashboard/completedtasks`}>
+              Tarefas concluídas
+            </Link>
           </li>
         </ul>
       </details>
