@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { UserRoundKey } from "lucide-react"
@@ -14,6 +15,7 @@ const schema = z.object({
 })
 
 const Login = () => {
+  const [loginError, setLoginError] = useState(false)
   const navigate = useNavigate()
   const { fetchUser } = useUser()
 
@@ -36,11 +38,22 @@ const Login = () => {
       localStorage.setItem("userId", id)
       await fetchUser()
       navigate(`/${username}/dashboard`)
+    } else {
+      setLoginError(true)
+      setTimeout(() => setLoginError(false), 3000)
     }
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-base-200">
+      {loginError && (
+        <div className="toast toast-top toast-center z-50">
+          <div className="alert alert-error">
+            <span>Email ou senha incorretos</span>
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-center mb-12">
         <img
           alt="Task Manager Logo"
