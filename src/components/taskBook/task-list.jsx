@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { PencilLine, Trash2, X } from "lucide-react"
 import TaskCard from "../task-card"
+import ToastMessage from "../toast-message"
 
 const schema = z.object({
   title: z.string().min(1, "Informe o novo título da tarefa"),
@@ -12,6 +13,11 @@ const schema = z.object({
 })
 
 const TaskList = () => {
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "success",
+  })
   const [tasks, setTasks] = useState([])
   const [selectedTask, setSelectedTask] = useState([])
   const [editingTask, setEditingTask] = useState(null)
@@ -37,6 +43,9 @@ const TaskList = () => {
     reset,
   } = useForm({ resolver: zodResolver(schema) })
 
+  const showToast = (message, type) =>
+    setToast({ visible: true, message, type })
+
   const handleEdit = (task) => {
     setEditingTask(task)
     reset({ title: task.title, description: task.description })
@@ -59,9 +68,11 @@ const TaskList = () => {
         current.map((t) => (t._id === editingTask._id ? updatedTask : t))
       )
       dialogRef.current.close()
+      showToast("Tarefa editada com sucesso!")
     } else {
       const error = await response.json()
       console.error(error)
+      showToast("Erro ao editar tarefa.", "error")
     }
   }
 
@@ -72,9 +83,11 @@ const TaskList = () => {
 
     if (response.ok) {
       setTasks((current) => current.filter((t) => t._id !== taskId))
+      showToast("Tarefa excluída.")
     } else {
       const error = await response.json()
       console.error(error)
+      showToast("Erro ao excluir tarefa.", "error")
     }
   }
 
@@ -95,6 +108,12 @@ const TaskList = () => {
 
   return (
     <div className="min-w-[500px]">
+      <ToastMessage
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+      />
       <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
         Lista de Tarefas
       </p>

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { NotebookPen, X } from "lucide-react"
+import ToastMessage from "../toast-message"
 
 const schema = z
   .object({
@@ -21,8 +22,13 @@ const schema = z
   })
 
 const RegisterButton = () => {
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "success",
+  })
+
   const registerModal = useRef(null)
-  const [success, setSuccess] = useState(false)
 
   const {
     register,
@@ -30,6 +36,9 @@ const RegisterButton = () => {
     formState: { errors },
     reset,
   } = useForm({ resolver: zodResolver(schema) })
+
+  const showToast = (message, type) =>
+    setToast({ visible: true, message, type })
 
   const onSubmit = async (data) => {
     const response = await fetch("http://localhost:8000/user", {
@@ -46,8 +55,7 @@ const RegisterButton = () => {
     if (response.ok) {
       registerModal.current.close()
       reset()
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
+      showToast("Usuário cadastrado com sucesso.", "success")
     } else {
       const error = await response.json()
       console.error(error)
@@ -61,13 +69,12 @@ const RegisterButton = () => {
 
   return (
     <div className="flex flex-col justify-center w-full">
-      {success && (
-        <div className="toast toast-top toast-center z-50">
-          <div className="alert alert-success">
-            <span>Usuário cadastrado com sucesso!</span>
-          </div>
-        </div>
-      )}
+      <ToastMessage
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+      />
       <button
         type="button"
         className="btn border-4 border-solid rounded-full w-full"

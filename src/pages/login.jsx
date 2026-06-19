@@ -8,6 +8,7 @@ import { UserRoundKey } from "lucide-react"
 
 import RegisterButton from "../components/modals/register-button"
 import { useUser } from "../context/user-context"
+import ToastMessage from "../components/toast-message"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
@@ -15,8 +16,14 @@ const schema = z.object({
 })
 
 const Login = () => {
-  const [loginError, setLoginError] = useState(false)
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "success",
+  })
+
   const navigate = useNavigate()
+
   const { fetchUser } = useUser()
 
   const {
@@ -24,6 +31,9 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
+
+  const showToast = (message, type) =>
+    setToast({ visible: true, message, type })
 
   const onSubmit = async (data) => {
     const response = await fetch("http://localhost:8000/user/login", {
@@ -39,20 +49,18 @@ const Login = () => {
       await fetchUser()
       navigate(`/${username}/dashboard`)
     } else {
-      setLoginError(true)
-      setTimeout(() => setLoginError(false), 3000)
+      showToast("Usuário ou senha inválidos.", "error")
     }
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-base-200">
-      {loginError && (
-        <div className="toast toast-top toast-center z-50">
-          <div className="alert alert-error">
-            <span>Email ou senha incorretos</span>
-          </div>
-        </div>
-      )}
+      <ToastMessage
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+      />
 
       <div className="flex justify-center mb-12">
         <img

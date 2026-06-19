@@ -1,21 +1,31 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import EditImageModal from "../components/modals/edit-image-modal"
 import EditPasswordModal from "../components/modals/edit-password-modal"
+import ToastMessage from "../components/toast-message"
 import { useUser } from "../context/user-context"
 
 import { Camera } from "lucide-react"
 
 const Profile = () => {
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "success",
+  })
   const { userData, setUserData } = useUser()
   const imageDialogRef = useRef(null)
   const passwordDialogRef = useRef(null)
 
-  const handleSaveImage = async (imageUrl) => {
+  const showToast = (message, type) =>
+    setToast({ visible: true, message, type })
+
+  const handleChangeImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
+
     const response = await fetch(`http://localhost:8000/user/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -31,7 +41,7 @@ const Profile = () => {
     }
   }
 
-  const handleSavePassword = async (password) => {
+  const handleChangePassword = async (password) => {
     const userId = localStorage.getItem("userId")
     const response = await fetch(`http://localhost:8000/user/${userId}`, {
       method: "PATCH",
@@ -39,7 +49,9 @@ const Profile = () => {
       body: JSON.stringify({ password }),
     })
 
-    if (!response.ok) {
+    if (response.ok) {
+      showToast("Senha alterada com sucesso!")
+    } else {
       const error = await response.json()
       console.error(error)
     }
@@ -47,6 +59,12 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ToastMessage
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+      />
       <Header />
       <UserMenu />
 
@@ -88,10 +106,10 @@ const Profile = () => {
         </div>
       </div>
 
-      <EditImageModal dialogRef={imageDialogRef} onSave={handleSaveImage} />
+      <EditImageModal dialogRef={imageDialogRef} onSave={handleChangeImage} />
       <EditPasswordModal
         dialogRef={passwordDialogRef}
-        onSave={handleSavePassword}
+        onSave={handleChangePassword}
       />
 
       <Footer />

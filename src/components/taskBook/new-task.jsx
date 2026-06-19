@@ -2,6 +2,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
+import ToastMessage from "../toast-message"
 
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -9,7 +10,11 @@ const schema = z.object({
 })
 
 const NewTask = () => {
-  const [success, setSuccess] = useState(false)
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "success",
+  })
 
   const {
     register,
@@ -17,6 +22,9 @@ const NewTask = () => {
     formState: { errors },
     reset,
   } = useForm({ resolver: zodResolver(schema) })
+
+  const showToast = (message, type) =>
+    setToast({ visible: true, message, type })
 
   const onSubmit = async (data) => {
     const userId = localStorage.getItem("userId")
@@ -29,8 +37,7 @@ const NewTask = () => {
 
     if (response.ok) {
       reset()
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
+      showToast("Tarefa criada com sucesso")
     } else {
       const error = await response.json()
       console.error(error)
@@ -39,13 +46,12 @@ const NewTask = () => {
 
   return (
     <div className="card w-150 card-lg">
-      {success && (
-        <div className="toast toast-top toast-center z-50 mt-18">
-          <div className="alert alert-success">
-            <span>Tarefa criada com sucesso!</span>
-          </div>
-        </div>
-      )}
+      <ToastMessage
+        visible={toast.visible}
+        message={toast.message}
+        type={toast.type}
+        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+      />
       <div className="card-body space-y-6">
         <form
           onSubmit={handleSubmit(onSubmit)}
