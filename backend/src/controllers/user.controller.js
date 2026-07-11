@@ -99,25 +99,26 @@ class UserController {
   }
 
   async delete() {
-    const userId = this.req.params.id
+    try {
+      const userId = this.req.params.id
 
-    const userToDelete = await UserModel.findById(userId)
+      const userToDelete = await UserModel.findById(userId)
 
-    if (!userToDelete) {
-      return notFoundError(this.res)
+      if (!userToDelete) {
+        return notFoundError(this.res)
+      }
+
+      await TaskModel.deleteMany({ user_id: userId })
+
+      const deletedUser = await UserModel.findByIdAndDelete(userId)
+
+      this.res.status(200).send(deletedUser)
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        return objectIdCastError(this.res)
+      }
+      this.res.status(500).send(error.message)
     }
-
-    await TaskModel.deleteMany({ user_id: userId })
-
-    const deletedUser = await UserModel.findByIdAndDelete(userId)
-
-    this.res.status(200).send(deletedUser)
-  }
-  catch(error) {
-    if (error instanceof mongoose.Error.CastError) {
-      return objectIdCastError(this.res)
-    }
-    this.res.status(500).send(error.message)
   }
 
   async login() {
