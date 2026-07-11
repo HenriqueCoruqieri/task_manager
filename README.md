@@ -8,13 +8,13 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 
 ## Demonstração
 
-| Tela | Descrição |
-|------|-----------|
-| Login / Cadastro | Autenticação com validação de formulários |
-| Dashboard | Criação e listagem de tarefas pendentes |
-| Tarefas concluídas | Histórico de tarefas finalizadas |
-| Perfil | Foto de perfil e alteração de senha |
-| Conta | Exclusão de conta e dados associados |
+| Tela               | Descrição                                 |
+| ------------------ | ----------------------------------------- |
+| Login / Cadastro   | Autenticação com validação de formulários |
+| Dashboard          | Criação e listagem de tarefas pendentes   |
+| Tarefas concluídas | Histórico de tarefas finalizadas          |
+| Perfil             | Foto de perfil e alteração de senha       |
+| Conta              | Exclusão de conta e dados associados      |
 
 ---
 
@@ -34,29 +34,29 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 
 ### Frontend
 
-| Tecnologia | Uso |
-|------------|-----|
-| [React 19](https://react.dev/) | Biblioteca de interface |
-| [Vite 8](https://vite.dev/) | Build tool e dev server |
-| [React Router DOM 7](https://reactrouter.com/) | Roteamento SPA |
-| [Tailwind CSS 4](https://tailwindcss.com/) | Estilização utilitária |
-| [DaisyUI 5](https://daisyui.com/) | Componentes e tema |
+| Tecnologia                                      | Uso                          |
+| ----------------------------------------------- | ---------------------------- |
+| [React 19](https://react.dev/)                  | Biblioteca de interface      |
+| [Vite 8](https://vite.dev/)                     | Build tool e dev server      |
+| [React Router DOM 7](https://reactrouter.com/)  | Roteamento SPA               |
+| [Tailwind CSS 4](https://tailwindcss.com/)      | Estilização utilitária       |
+| [DaisyUI 5](https://daisyui.com/)               | Componentes e tema           |
 | [React Hook Form](https://react-hook-form.com/) | Gerenciamento de formulários |
-| [Zod](https://zod.dev/) | Validação de schemas |
-| [Lucide React](https://lucide.dev/) | Ícones |
+| [Zod](https://zod.dev/)                         | Validação de schemas         |
+| [Lucide React](https://lucide.dev/)             | Ícones                       |
 
 ### Backend
 
-| Tecnologia | Uso |
-|------------|-----|
-| [Node.js](https://nodejs.org/) | Runtime JavaScript |
-| [Express 5](https://expressjs.com/) | Framework HTTP / API REST |
-| [Mongoose 9](https://mongoosejs.com/) | ODM para MongoDB |
-| [MongoDB Atlas](https://www.mongodb.com/atlas) | Banco de dados em nuvem |
-| [bcryptjs](https://www.npmjs.com/package/bcryptjs) | Hash de senhas |
-| [jose](https://github.com/panva/jose) | Geração de tokens JWT |
-| [CORS](https://www.npmjs.com/package/cors) | Comunicação cross-origin |
-| [dotenv](https://www.npmjs.com/package/dotenv) | Variáveis de ambiente |
+| Tecnologia                                         | Uso                       |
+| -------------------------------------------------- | ------------------------- |
+| [Node.js](https://nodejs.org/)                     | Runtime JavaScript        |
+| [Express 5](https://expressjs.com/)                | Framework HTTP / API REST |
+| [Mongoose 9](https://mongoosejs.com/)              | ODM para MongoDB          |
+| [MongoDB Atlas](https://www.mongodb.com/atlas)     | Banco de dados em nuvem   |
+| [bcryptjs](https://www.npmjs.com/package/bcryptjs) | Hash de senhas            |
+| [jose](https://github.com/panva/jose)              | Geração de tokens JWT     |
+| [CORS](https://www.npmjs.com/package/cors)         | Comunicação cross-origin  |
+| [dotenv](https://www.npmjs.com/package/dotenv)     | Variáveis de ambiente     |
 
 ### Ferramentas de desenvolvimento
 
@@ -138,7 +138,7 @@ task_manager/
 │           └── task-list.jsx
 │
 ├── public/                         # Assets estáticos
-├── docs/                           # Documentação técnica interna
+├── rules/                          # Regras para o agente de IA
 ├── package.json                    # Dependências do frontend
 └── vite.config.js
 ```
@@ -151,24 +151,24 @@ Banco: **`task-manager`** (MongoDB Atlas)
 
 ### User
 
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `first_name` | `String` | Nome (obrigatório) |
-| `last_name` | `String` | Sobrenome (obrigatório) |
-| `email` | `String` | E-mail único (obrigatório) |
-| `password` | `String` | Senha com hash bcrypt (obrigatório) |
-| `image_url` | `String` | URL ou Base64 da foto de perfil (padrão: `/default_profile.png`) |
+| Campo        | Tipo     | Descrição                                                        |
+| ------------ | -------- | ---------------------------------------------------------------- |
+| `first_name` | `String` | Nome (obrigatório)                                               |
+| `last_name`  | `String` | Sobrenome (obrigatório)                                          |
+| `email`      | `String` | E-mail único (obrigatório)                                       |
+| `password`   | `String` | Senha com hash bcrypt (obrigatório)                              |
+| `image_url`  | `String` | URL ou Base64 da foto de perfil (padrão: `/default_profile.png`) |
 
 A senha é hasheada automaticamente via hook `pre("save")` do Mongoose antes de persistir no banco.
 
 ### Task
 
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `title` | `String` | Título da tarefa (obrigatório) |
-| `description` | `String` | Descrição da tarefa (obrigatório) |
-| `isCompleted` | `Boolean` | Status de conclusão (padrão: `false`) |
-| `user_id` | `ObjectId` | Referência ao usuário dono da tarefa (`ref: "User"`) |
+| Campo         | Tipo       | Descrição                                            |
+| ------------- | ---------- | ---------------------------------------------------- |
+| `title`       | `String`   | Título da tarefa (obrigatório)                       |
+| `description` | `String`   | Descrição da tarefa (obrigatório)                    |
+| `isCompleted` | `Boolean`  | Status de conclusão (padrão: `false`)                |
+| `user_id`     | `ObjectId` | Referência ao usuário dono da tarefa (`ref: "User"`) |
 
 ### Relacionamento
 
@@ -186,14 +186,14 @@ Base URL: `http://localhost:8000`
 
 ### Usuários — `/user`
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| `GET` | `/user` | Lista todos os usuários |
-| `GET` | `/user/:id` | Busca usuário por ID |
-| `POST` | `/user` | Cria novo usuário |
-| `PATCH` | `/user/:id` | Atualiza senha ou foto de perfil |
-| `DELETE` | `/user/:id` | Remove usuário e suas tarefas |
-| `POST` | `/user/login` | Autentica e retorna JWT |
+| Método   | Rota          | Descrição                        |
+| -------- | ------------- | -------------------------------- |
+| `GET`    | `/user`       | Lista todos os usuários          |
+| `GET`    | `/user/:id`   | Busca usuário por ID             |
+| `POST`   | `/user`       | Cria novo usuário                |
+| `PATCH`  | `/user/:id`   | Atualiza senha ou foto de perfil |
+| `DELETE` | `/user/:id`   | Remove usuário e suas tarefas    |
+| `POST`   | `/user/login` | Autentica e retorna JWT          |
 
 **Login — resposta de sucesso:**
 
@@ -207,25 +207,25 @@ Base URL: `http://localhost:8000`
 
 ### Tarefas — `/tasks`
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| `GET` | `/tasks` | Lista tarefas (`?user_id=` para filtrar por usuário) |
-| `GET` | `/tasks/:id` | Busca tarefa por ID |
-| `POST` | `/tasks` | Cria nova tarefa |
-| `PATCH` | `/tasks/:id` | Atualiza título, descrição ou `isCompleted` |
-| `DELETE` | `/tasks/:id` | Remove tarefa |
+| Método   | Rota         | Descrição                                            |
+| -------- | ------------ | ---------------------------------------------------- |
+| `GET`    | `/tasks`     | Lista tarefas (`?user_id=` para filtrar por usuário) |
+| `GET`    | `/tasks/:id` | Busca tarefa por ID                                  |
+| `POST`   | `/tasks`     | Cria nova tarefa                                     |
+| `PATCH`  | `/tasks/:id` | Atualiza título, descrição ou `isCompleted`          |
+| `DELETE` | `/tasks/:id` | Remove tarefa                                        |
 
 ---
 
 ## Rotas do frontend
 
-| Rota | Página |
-|------|--------|
-| `/` | Login |
-| `/:username/dashboard` | Dashboard (tarefas) |
-| `/:username/dashboard/profile` | Perfil do usuário |
-| `/:username/dashboard/account` | Configurações de conta |
-| `/:username/dashboard/completedtasks` | Tarefas concluídas |
+| Rota                                  | Página                 |
+| ------------------------------------- | ---------------------- |
+| `/`                                   | Login                  |
+| `/:username/dashboard`                | Dashboard (tarefas)    |
+| `/:username/dashboard/profile`        | Perfil do usuário      |
+| `/:username/dashboard/account`        | Configurações de conta |
+| `/:username/dashboard/completedtasks` | Tarefas concluídas     |
 
 ---
 
@@ -285,18 +285,18 @@ O frontend estará disponível em `http://localhost:5173`.
 
 ### Frontend (raiz)
 
-| Comando | Descrição |
-|---------|-----------|
-| `npm run dev` | Inicia o servidor de desenvolvimento |
-| `npm run build` | Gera build de produção |
-| `npm run preview` | Pré-visualiza o build |
-| `npm run lint` | Executa o ESLint |
-| `npm run format` | Formata o código com Prettier |
+| Comando           | Descrição                            |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Inicia o servidor de desenvolvimento |
+| `npm run build`   | Gera build de produção               |
+| `npm run preview` | Pré-visualiza o build                |
+| `npm run lint`    | Executa o ESLint                     |
+| `npm run format`  | Formata o código com Prettier        |
 
 ### Backend (`/backend`)
 
-| Comando | Descrição |
-|---------|-----------|
+| Comando       | Descrição                     |
+| ------------- | ----------------------------- |
 | `npm run dev` | Inicia o servidor com Nodemon |
 
 ---
@@ -308,12 +308,6 @@ O frontend estará disponível em `http://localhost:5173`.
 - **Modais nativos** — uso do elemento HTML `<dialog>` com DaisyUI, sem dependência de biblioteca de modal.
 - **Foto de perfil em Base64** — imagem convertida no cliente e armazenada como string no MongoDB (limite de 2 MB no upload).
 - **JWT com jose** — token gerado no login com expiração de 1 dia; armazenado no `localStorage` do navegador.
-
----
-
-## Documentação adicional
-
-A pasta `docs/` contém material sobre refatoração do componente `TaskList`, aplicando o princípio de responsabilidade única (SRP) com extração de hook customizado e componentes menores.
 
 ---
 

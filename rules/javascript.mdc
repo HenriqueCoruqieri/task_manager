@@ -1,0 +1,11 @@
+---
+globs: _.js,_.jsx
+alwaysApply: true
+---
+
+- Escreva um código limpo, fácil de manter seguindos os princípios SOLID e Clean Code.
+- Use nomes de variáveis descritivos (exemplos: isLoading, hasError).
+- Use kebab-kase para os nomes de pastas e arquivos.
+- Sempre JavaScript para escrever código.
+- DRY (Don't Repeat Yourself). Evite duplicidade de código. Quando necessário, crie funções/componentes reutilizáveis
+- NUNCA escreva comentários em seu código.

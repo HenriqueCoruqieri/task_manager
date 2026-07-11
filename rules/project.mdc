@@ -1,0 +1,107 @@
+---
+description: Contexto e convenções do projeto Task Manager
+alwaysApply: true
+---
+
+# Task Manager — Regras do Projeto
+
+Aplicação full-stack de gerenciamento de tarefas pessoais. Monorepo com frontend React (Vite) na raiz e backend Express em `backend/`. Comunicação via HTTP/JSON. Banco MongoDB Atlas (`task-manager`).
+
+## Stack obrigatória
+
+**Frontend (raiz):** React 19, Vite 8, React Router DOM 7, Tailwind CSS 4, DaisyUI 5, React Hook Form, Zod (`@hookform/resolvers`), Lucide React.
+
+**Backend (`backend/`):** Node.js, Express 5, Mongoose 9, bcryptjs, jose (JWT), cors, dotenv.
+
+**Ferramentas:** ESLint + Prettier (sem ponto e vírgula, aspas duplas, tabWidth 2).
+
+**Não usar:** TypeScript, Axios, bibliotecas de modal externas, Redux/Zustand, CSS modules ou styled-components.
+
+Novos arquivos e pastas: **kebab-case**. Componentes React: export default com nome PascalCase.
+
+## Arquitetura backend
+
+- **CommonJS** (`require` / `module.exports`) — backend usa `"type": "commonjs"`.
+- Padrão em camadas: **rotas → controllers → models**.
+- Controllers são **classes** instanciadas por rota: `new UserController(req, res).getAll()`.
+- Cada método do controller usa `try/catch` e retorna status HTTP adequado.
+- Erros reutilizáveis ficam em `backend/src/errors/` (`notFoundError`, `objectIdCastError`, `notAllowedFieldsToUpdateError`).
+- Updates via PATCH validam campos permitidos com whitelist (`allowedUpdates`) antes de salvar.
+- Senhas hasheadas no hook `pre("save")` do Mongoose — nunca enviar senha em texto plano ao banco.
+- JWT gerado com `jose` (`SignJWT`), expiração de 1 dia, secret em `process.env.JWT_SECRET`.
+- Exclusão de usuário remove tarefas em cascata (`TaskModel.deleteMany({ user_id })`).
+
+## Arquitetura frontend
+
+- **ES Modules** (`import` / `export`) — frontend usa `"type": "module"`.
+- Componentes funcionais com hooks. Sem class components.
+- Roteamento em `App.jsx` com `BrowserRouter` + `Routes`.
+- Estado global do usuário via `UserContext` (`useUser()` → `userData`, `setUserData`, `fetchUser`).
+- Autenticação: `localStorage` guarda `token` e `userId`. Logout limpa ambos.
+- Chamadas HTTP com **`fetch` nativo** — base URL `http://localhost:8000`.
+- Mapear camelCase do formulário para snake_case da API (ex: `firstName` → `first_name`).
+
+### Rotas do frontend
+
+| Rota                                  | Página             |
+| ------------------------------------- | ------------------ |
+| `/`                                   | Login              |
+| `/:username/dashboard`                | Dashboard          |
+| `/:username/dashboard/profile`        | Perfil             |
+| `/:username/dashboard/account`        | Conta              |
+| `/:username/dashboard/completedtasks` | Tarefas concluídas |
+
+Páginas autenticadas usam layout com `Header`, `UserMenu` e `Footer`.
+
+- Caso necessário criar uma nova rota, siga o mesmo padrão, por exemplo: `/:username/dashboard/nome-da-nova-rota`
+
+## Formulários (React Hook Form + Zod)
+
+Padrão obrigatório para todo formulário:
+
+```jsx
+const schema = z.object({ /* campos */ })
+
+const { register, handleSubmit, formState: { errors }, reset } =
+  useForm({ resolver: zodResolver(schema) })
+
+<form onSubmit={handleSubmit(onSubmit)} noValidate>
+  <input {...register("campo")} className="input input-bordered w-full" />
+  {errors.campo && (
+    <p className="text-error text-sm mt-1">{errors.campo.message}</p>
+  )}
+</form>
+```
+
+- Schema Zod definido no topo do arquivo, antes do componente.
+- Mensagens de validação em **português**.
+- Usar `.refine()` para validações cruzadas (ex: confirmar senha).
+- Após sucesso, chamar `reset()` quando apropriado.
+- Atributo `noValidate` no `<form>` para desabilitar validação nativa do browser.
+
+## UI — Tailwind + DaisyUI
+
+- Tailwind configurado via `@import "tailwindcss"` e `@plugin "daisyui"` em `src/index.css`.
+- Sempre usar classes DaisyUI para componentes.
+- Cor principal do tema: **emerald** (`emerald-500`, `emerald-600`, `btn-success`, `text-emerald-500`).
+- Ícones exclusivamente de **lucide-react**.
+- Modais: elemento HTML `<dialog>` com `ref`, abrir via `ref.current.showModal()`, fechar via `ref.current.close()`. Incluir `<form method="dialog" className="modal-backdrop">` para fechar ao clicar fora.
+- Feedback: componente `ToastMessage` com props `{ visible, message, type, onDismiss }`. Tipos: `"success"` ou `"error"`. Auto-dismiss em 3 segundos.
+
+## Padrões de componentes
+
+- **Páginas** (`src/pages/`): orquestram layout e chamadas à API.
+- **Componentes** (`src/components/`): UI reutilizável, recebem dados via props.
+- **Modais** (`src/components/modals/`): recebem `dialogRef` e callback (`onSave`, `onConfirm`). Lógica de API fica na página pai.
+- Estado local com `useState`. Refs com `useRef` para modais.
+- `useEffect` para fetch inicial de dados (ex: listagem de tarefas).
+
+## Convenções de código
+
+- JavaScript puro — sem TypeScript, sem JSDoc extensivo.
+- Mensagens de UI e validação em português.
+- Prettier: sem ponto e vírgula, aspas duplas, trailing comma es5.
+- Não criar arquivos de teste, config ou documentação não solicitados.
+- Não alterar a estrutura de pastas existente sem necessidade.
+- Manter escopo mínimo: resolver apenas o que foi pedido, seguindo os padrões já estabelecidos no código existente.
+- Sempre que acrescentar algo novo como, uma nova tabela, ou um novo campo em uma tabela já existente, uma nova estrutura de pastas, novos componentes, etc, ATUALIZAR o README.md com as mudanças aplicadas.
