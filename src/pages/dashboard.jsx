@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import UserMenu from "../components/user-menu"
 import Header from "../components/header"
 import Footer from "../components/footer"
-import TaskBook from "../components/taskBook/task-book"
+import TaskBook from "../components/task-book/task-book"
 
 const Dashboard = () => {
   const { username } = useParams()
