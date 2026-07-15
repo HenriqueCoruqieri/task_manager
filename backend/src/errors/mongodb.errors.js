@@ -9,7 +9,7 @@ const objectIdCastError = (res) => {
 }
 
 const passwordError = (res) => {
-  return res.status(500).send("Senha incorreta")
+  return res.status(401).send("Senha incorreta")
 }
 
 const duplicateEmailError = (res) => {

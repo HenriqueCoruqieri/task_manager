@@ -1,4 +1,10 @@
 import { useEffect } from "react"
+
+const alertClasses = {
+  success: "alert alert-success",
+  error: "alert alert-error",
+}
+
 const ToastMessage = ({ visible, message, type, onDismiss }) => {
   useEffect(() => {
     if (!visible) return
@@ -11,7 +17,7 @@ const ToastMessage = ({ visible, message, type, onDismiss }) => {
 
   return (
     <div className="toast toast-top toast-center z-50">
-      <div className={`alert alert-${type}`}>
+      <div className={alertClasses[type] ?? alertClasses.success}>
         <span className="font-semibold">{message}</span>
       </div>
     </div>
