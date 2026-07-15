@@ -50,7 +50,7 @@ const Profile = () => {
     })
 
     if (response.ok) {
-      showToast("Senha alterada com sucesso!")
+      showToast("Senha alterada com sucesso!", "success")
     } else {
       const error = await response.json()
       console.error(error)

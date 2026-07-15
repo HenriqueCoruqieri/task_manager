@@ -68,7 +68,7 @@ const TaskList = () => {
         current.map((t) => (t._id === editingTask._id ? updatedTask : t))
       )
       dialogRef.current.close()
-      showToast("Tarefa editada com sucesso!")
+      showToast("Tarefa editada com sucesso!", "success")
     } else {
       const error = await response.json()
       console.error(error)
@@ -83,7 +83,7 @@ const TaskList = () => {
 
     if (response.ok) {
       setTasks((current) => current.filter((t) => t._id !== taskId))
-      showToast("Tarefa excluída.")
+      showToast("Tarefa excluída.", "success")
     } else {
       const error = await response.json()
       console.error(error)

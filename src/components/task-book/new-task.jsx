@@ -37,7 +37,7 @@ const NewTask = () => {
 
     if (response.ok) {
       reset()
-      showToast("Tarefa criada com sucesso")
+      showToast("Tarefa criada com sucesso", "success")
     } else {
       const error = await response.json()
       console.error(error)
