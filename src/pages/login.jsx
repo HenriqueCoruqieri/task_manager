@@ -136,7 +136,10 @@ const Login = () => {
       </form>
 
       <div className="flex flex-col space-y-2 mt-2 w-100">
-        <RegisterButton dialogRef={registerDialogRef} onSave={handleRegister} />
+        <RegisterFormModal
+          dialogRef={registerDialogRef}
+          onSave={handleRegister}
+        />
       </div>
     </div>
   )
