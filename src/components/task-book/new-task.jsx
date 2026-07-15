@@ -1,8 +1,8 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useState } from "react"
 import ToastMessage from "../toast-message"
+import { useToast } from "../../hooks/use-toast"
 
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -10,11 +10,7 @@ const schema = z.object({
 })
 
 const NewTask = () => {
-  const [toast, setToast] = useState({
-    visible: false,
-    message: "",
-    type: "success",
-  })
+  const { toast, showToast, dismissToast } = useToast()
 
   const {
     register,
@@ -22,9 +18,6 @@ const NewTask = () => {
     formState: { errors },
     reset,
   } = useForm({ resolver: zodResolver(schema) })
-
-  const showToast = (message, type) =>
-    setToast({ visible: true, message, type })
 
   const onSubmit = async (data) => {
     const userId = localStorage.getItem("userId")
@@ -50,7 +43,7 @@ const NewTask = () => {
         visible={toast.visible}
         message={toast.message}
         type={toast.type}
-        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+        onDismiss={dismissToast}
       />
       <div className="card-body space-y-6">
         <form

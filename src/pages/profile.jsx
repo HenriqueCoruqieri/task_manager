@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -7,21 +7,15 @@ import EditImageModal from "../components/modals/edit-image-modal"
 import EditPasswordModal from "../components/modals/edit-password-modal"
 import ToastMessage from "../components/toast-message"
 import { useUser } from "../context/user-context"
+import { useToast } from "../hooks/use-toast"
 
 import { Camera } from "lucide-react"
 
 const Profile = () => {
-  const [toast, setToast] = useState({
-    visible: false,
-    message: "",
-    type: "success",
-  })
+  const { toast, showToast, dismissToast } = useToast()
   const { userData, setUserData } = useUser()
   const imageDialogRef = useRef(null)
   const passwordDialogRef = useRef(null)
-
-  const showToast = (message, type) =>
-    setToast({ visible: true, message, type })
 
   const handleChangeImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
@@ -63,7 +57,7 @@ const Profile = () => {
         visible={toast.visible}
         message={toast.message}
         type={toast.type}
-        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+        onDismiss={dismissToast}
       />
       <Header />
       <UserMenu />

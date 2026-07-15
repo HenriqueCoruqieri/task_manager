@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { PencilLine, Trash2, X } from "lucide-react"
 import TaskCard from "../task-card"
 import ToastMessage from "../toast-message"
+import { useToast } from "../../hooks/use-toast"
 
 const schema = z.object({
   title: z.string().min(1, "Informe o novo título da tarefa"),
@@ -13,11 +14,7 @@ const schema = z.object({
 })
 
 const TaskList = () => {
-  const [toast, setToast] = useState({
-    visible: false,
-    message: "",
-    type: "success",
-  })
+  const { toast, showToast, dismissToast } = useToast()
   const [tasks, setTasks] = useState([])
   const [selectedTask, setSelectedTask] = useState([])
   const [editingTask, setEditingTask] = useState(null)
@@ -42,9 +39,6 @@ const TaskList = () => {
     formState: { errors },
     reset,
   } = useForm({ resolver: zodResolver(schema) })
-
-  const showToast = (message, type) =>
-    setToast({ visible: true, message, type })
 
   const handleEdit = (task) => {
     setEditingTask(task)
@@ -112,7 +106,7 @@ const TaskList = () => {
         visible={toast.visible}
         message={toast.message}
         type={toast.type}
-        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+        onDismiss={dismissToast}
       />
       <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
         Lista de Tarefas

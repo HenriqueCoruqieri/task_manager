@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { UserRoundKey } from "lucide-react"
@@ -9,6 +9,7 @@ import { UserRoundKey } from "lucide-react"
 import RegisterFormModal from "../components/modals/register-form-modal"
 import { useUser } from "../context/user-context"
 import ToastMessage from "../components/toast-message"
+import { useToast } from "../hooks/use-toast"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
@@ -16,11 +17,7 @@ const schema = z.object({
 })
 
 const Login = () => {
-  const [toast, setToast] = useState({
-    visible: false,
-    message: "",
-    type: "success",
-  })
+  const { toast, showToast, dismissToast } = useToast()
 
   const navigate = useNavigate()
   const registerDialogRef = useRef(null)
@@ -32,9 +29,6 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
-
-  const showToast = (message, type) =>
-    setToast({ visible: true, message, type })
 
   const onSubmit = async (data) => {
     const response = await fetch("http://localhost:8000/user/login", {
@@ -80,7 +74,7 @@ const Login = () => {
         visible={toast.visible}
         message={toast.message}
         type={toast.type}
-        onDismiss={() => setToast((t) => ({ ...t, visible: false }))}
+        onDismiss={dismissToast}
       />
 
       <div className="flex justify-center mb-12">
