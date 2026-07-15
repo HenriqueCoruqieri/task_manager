@@ -47,7 +47,7 @@ class UserController {
       }
 
       console.error(error)
-      this.res.staus(500).send(error.message)
+      this.res.status(500).send(error.message)
     }
   }
 
@@ -134,7 +134,7 @@ class UserController {
       const passwordIsValid = await bcrypt.compare(password, user.password)
 
       if (!passwordIsValid) {
-        passwordError()
+        return passwordError(this.res)
       }
 
       const secret = new TextEncoder().encode(process.env.JWT_SECRET)

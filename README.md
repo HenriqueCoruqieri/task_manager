@@ -115,6 +115,8 @@ task_manager/
 │   ├── main.jsx                    # Entry point React
 │   ├── context/
 │   │   └── user-context.jsx        # Estado global do usuário
+│   ├── hooks/
+│   │   └── use-toast.js            # Estado e controle do ToastMessage
 │   ├── pages/                      # Páginas por rota
 │   │   ├── login.jsx
 │   │   ├── dashboard.jsx
@@ -128,11 +130,11 @@ task_manager/
 │       ├── task-card.jsx
 │       ├── toast-message.jsx
 │       ├── modals/                 # Modais reutilizáveis
-│       │   ├── register-button.jsx
+│       │   ├── register-form-modal.jsx
 │       │   ├── edit-image-modal.jsx
 │       │   ├── edit-password-modal.jsx
 │       │   └── delete-account-modal.jsx
-│       └── taskBook/               # Módulo de tarefas
+│       └── task-book/              # Módulo de tarefas
 │           ├── task-book.jsx
 │           ├── new-task.jsx
 │           └── task-list.jsx
