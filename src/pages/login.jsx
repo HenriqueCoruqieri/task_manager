@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { UserRoundKey } from "lucide-react"
 
-import RegisterButton from "../components/modals/register-button"
+import RegisterFormModal from "../components/modals/register-form-modal"
 import { useUser } from "../context/user-context"
 import ToastMessage from "../components/toast-message"
 
@@ -23,6 +23,7 @@ const Login = () => {
   })
 
   const navigate = useNavigate()
+  const registerDialogRef = useRef(null)
 
   const { fetchUser } = useUser()
 
@@ -50,6 +51,26 @@ const Login = () => {
       navigate(`/${username}/dashboard`)
     } else {
       showToast("Usuário ou senha inválidos.", "error")
+    }
+  }
+
+  const handleRegister = async (data) => {
+    const response = await fetch("http://localhost:8000/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
+      }),
+    })
+
+    if (response.ok) {
+      showToast("Usuário cadastrado com sucesso.", "success")
+    } else {
+      const error = await response.json()
+      console.error(error)
     }
   }
 
@@ -115,7 +136,7 @@ const Login = () => {
       </form>
 
       <div className="flex flex-col space-y-2 mt-2 w-100">
-        <RegisterButton />
+        <RegisterButton dialogRef={registerDialogRef} onSave={handleRegister} />
       </div>
     </div>
   )
