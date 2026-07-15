@@ -12,8 +12,13 @@ const passwordError = (res) => {
   return res.status(500).send("Senha incorreta")
 }
 
+const duplicateEmailError = (res) => {
+  return res.status(409).send("Este email já está cadastrado")
+}
+
 module.exports = {
   notFoundError,
   objectIdCastError,
   passwordError,
+  duplicateEmailError,
 }

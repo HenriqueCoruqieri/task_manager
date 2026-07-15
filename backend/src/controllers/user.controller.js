@@ -10,6 +10,7 @@ const {
   notFoundError,
   objectIdCastError,
   passwordError,
+  duplicateEmailError,
 } = require("../errors/mongodb.errors")
 const { notAllowedFieldsToUpdateError } = require("../errors/general.errors")
 
@@ -59,6 +60,10 @@ class UserController {
 
       this.res.status(201).send(createUser)
     } catch (error) {
+      if (error.code === 11000) {
+        return duplicateEmailError(this.res)
+      }
+
       console.error(error)
       this.res.status(500).send(error.message)
     }

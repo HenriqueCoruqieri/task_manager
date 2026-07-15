@@ -63,8 +63,8 @@ const Login = () => {
     if (response.ok) {
       showToast("Usuário cadastrado com sucesso.", "success")
     } else {
-      const error = await response.json()
-      console.error(error)
+      const errorMessage = await response.text()
+      showToast(errorMessage, "error")
     }
   }
 
