@@ -8,17 +8,21 @@ const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
   return (
     <div className="p-4">
-      <div className="breadcrumbs rounded-xl text-emerald-500 font-bold">
-        <ul className="w-full justify-center">
-          <li className="space-x-2">
-            <StickyNotePlus />
-            <a onClick={() => setActiveView("new-task")}>Nova Tarefa</a>
-          </li>
-          <li className="space-x-2">
-            <BookOpenText />
-            <a onClick={() => setActiveView("tasks")}>Tarefas</a>
-          </li>
-        </ul>
+      <div className="tabs justify-center gap-2 p-2">
+        <a
+          className={`tab gap-2 font-bold ${activeView === "new-task" ? "tab-active text-emerald-500" : "text-white"}`}
+          onClick={() => setActiveView("new-task")}
+        >
+          <StickyNotePlus className="size-4" />
+          Nova Tarefa
+        </a>
+        <a
+          className={`tab gap-2 font-bold ${activeView === "tasks" ? "tab-active text-emerald-500" : "text-white"}`}
+          onClick={() => setActiveView("tasks")}
+        >
+          <BookOpenText className="size-4" />
+          Tarefas
+        </a>
       </div>
 
       <div className="mt-6">

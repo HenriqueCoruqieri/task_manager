@@ -28,7 +28,7 @@ const CompletedTasks = () => {
 
       <div className="flex flex-1 justify-center items-center">
         <div className="bg-black w-[550px] rounded-3xl p-6">
-          <div className="flex justify-between p-2 gap-4">
+          <div className="flex justify-between">
             <h1 className="text-3xl font-bold text-white text-center">
               Tarefas Concluídas
             </h1>
@@ -44,7 +44,9 @@ const CompletedTasks = () => {
         </div>
       </div>
 
-      <Footer />
+      <div className="mt-4">
+        <Footer />
+      </div>
     </div>
   )
 }

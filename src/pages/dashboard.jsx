@@ -16,7 +16,7 @@ const Dashboard = () => {
           <UserMenu />
         </div>
 
-        <div className="flex flex-col items-center mt-12">
+        <div className="flex flex-col items-center">
           <TaskBook />
         </div>
       </div>

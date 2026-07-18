@@ -77,7 +77,7 @@ const Login = () => {
         onDismiss={dismissToast}
       />
 
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center">
         <img
           alt="Task Manager Logo"
           src="/task_manager.png"
@@ -86,7 +86,7 @@ const Login = () => {
       </div>
 
       <div className="flex flex-row space-x-2 mt-12">
-        <h2 className="font-bold">Faça seu login</h2>
+        <h2 className="font-bold">Login</h2>
         <UserRoundKey />
       </div>
 
