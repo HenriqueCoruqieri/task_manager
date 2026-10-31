@@ -4,7 +4,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import TaskBook from "../components/task-book/task-book"
 
-const Dashboard = () => {
+const Home = () => {
   const { username } = useParams()
 
   return (
@@ -26,4 +26,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Home
