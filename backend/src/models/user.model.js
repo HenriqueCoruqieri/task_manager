@@ -27,7 +27,7 @@ const UserSchema = Schema({
     type: String,
     default: "/default_profile.png",
   },
-})
+}, { timestamps: true })
 
 UserSchema.pre("save", async function () {
   if (!this.isModified("password")) return

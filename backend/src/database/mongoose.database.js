@@ -7,7 +7,7 @@ const connectToDatabase = async () => {
 
     const uri =
       process.env.MONGODB_URI ||
-      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@fsctaskmanagercluster.wfztf1d.mongodb.net/task-manager?appName=FscTaskManagerCluster`
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@learning.bkipbs1.mongodb.net/task-manager?appName=learning`
 
     await mongoose.connect(uri)
     console.log("Connected to MongoDB")
