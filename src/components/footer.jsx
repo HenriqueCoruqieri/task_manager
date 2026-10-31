@@ -9,7 +9,7 @@ const Footer = () => {
           <img
             alt="GitHub Icon"
             src="/git_icon.png"
-            className=" w-[65px] h-[40px]"
+            className=" w-[35px] h-[25px]"
           />
         </a>
       </nav>

@@ -7,7 +7,7 @@ import { useState } from "react"
 const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
   return (
-    <div className="p-">
+    <div className="flex flex-col flex-1 min-h-0">
       <div className="tabs justify-center gap-2 p-2">
         <a
           className={`tab gap-2 font-bold ${activeView === "new-task" ? "tab-active text-emerald-500" : "text-white"}`}
@@ -25,7 +25,7 @@ const TaskBook = () => {
         </a>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 flex flex-col flex-1 min-h-0">
         {activeView == "new-task" ? <NewTask /> : <TaskList />}
       </div>
     </div>

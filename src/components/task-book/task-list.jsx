@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { PencilLine, Trash2, X } from "lucide-react"
 import TaskCard from "../task-card"
 import ToastMessage from "../toast-message"
+import TaskDetailsModal from "../modals/task-details-modal"
 import { useToast } from "../../hooks/use-toast"
 
 const schema = z.object({
@@ -18,7 +19,9 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([])
   const [selectedTask, setSelectedTask] = useState([])
   const [editingTask, setEditingTask] = useState(null)
+  const [viewingTask, setViewingTask] = useState(null)
   const dialogRef = useRef(null)
+  const viewDialogRef = useRef(null)
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -44,6 +47,11 @@ const TaskList = () => {
     setEditingTask(task)
     reset({ title: task.title, description: task.description })
     dialogRef.current.showModal()
+  }
+
+  const handleView = (task) => {
+    setViewingTask(task)
+    viewDialogRef.current.showModal()
   }
 
   const onEditSubmit = async (data) => {
@@ -101,7 +109,7 @@ const TaskList = () => {
   }
 
   return (
-    <div className="min-w-[500px]">
+    <div className="min-w-[500px] flex flex-col min-h-0 pb-6">
       <ToastMessage
         visible={toast.visible}
         message={toast.message}
@@ -111,7 +119,7 @@ const TaskList = () => {
       <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
         Lista de Tarefas
       </p>
-      <ul className="list rounded-box max-h-[50vh] overflow-y-auto pr-2 mt-1 space-y-4">
+      <ul className="list rounded-box flex-1 min-h-0 scrollbar-dark pr-2 mt-1 space-y-4">
         {tasks.map((task, index) => (
           <li key={task._id} className="flex items-center gap-4">
             <button
@@ -123,6 +131,8 @@ const TaskList = () => {
             <TaskCard
               task={task}
               index={index}
+              className="w-88 shrink-0"
+              onOpen={() => handleView(task)}
               isSelected={selectedTask.includes(task._id)}
               onToggleSelect={() =>
                 setSelectedTask((current) =>
@@ -151,6 +161,8 @@ const TaskList = () => {
           Concluir
         </button>
       </div>
+
+      <TaskDetailsModal dialogRef={viewDialogRef} task={viewingTask} />
 
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box">
