@@ -73,14 +73,14 @@ const Profile = () => {
         </div>
 
         <div className="avatar">
-          <div className="w-24 rounded-xl min-w-[200px] min-h-[200px] border-emerald-500 border-2">
+          <div className="w-24 rounded-xl min-w-40 min-h-55 border-emerald-500 border-2">
             <img src={userData?.image_url || "/default_profile.png"} />
           </div>
         </div>
 
         <div className="font-semibold mt-2">
           {userData && (
-            <div className="opacity-90 tracking-wide space-y-2">
+            <div className="opacity-90 tracking-wide space-y-1">
               <h1 className="text-center text-2xl">
                 {userData.first_name} {userData.last_name}
               </h1>
@@ -90,7 +90,7 @@ const Profile = () => {
           )}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-4">
           <button
             className="btn btn-success"
             onClick={() => passwordDialogRef.current.showModal()}
