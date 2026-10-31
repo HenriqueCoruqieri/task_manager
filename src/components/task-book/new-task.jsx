@@ -45,37 +45,36 @@ const NewTask = () => {
         type={toast.type}
         onDismiss={dismissToast}
       />
-      <div className="card-body space-y-6">
+      <div className="card-body card-md">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-6"
+          className="space-y-4"
           noValidate
         >
-          <div className="space-y-2">
+          <div className="space-y-1">
             <h2 className="card-title card-actions text-emerald-500">
               Título da Tarefa
             </h2>
             <input
               {...register("title")}
               type="text"
-              className="input input-md w-full border border-emerald-500"
+              className="input input-sm w-full border border-emerald-500"
             />
             {errors.title && (
-              <p className="text-error text-sm mt-1">{errors.title.message}</p>
+              <p className="text-error text-sm ">{errors.title.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             <h2 className="card-title card-actions text-emerald-500">
               Descrição
             </h2>
-            <input
+            <textarea
               {...register("description")}
-              type="text"
-              className="input input-md w-full border border-emerald-500"
+              className="textarea textarea-sm w-full h-20 resize-none scrollbar-dark border border-emerald-500 leading-normal"
             />
             {errors.description && (
-              <p className="text-error text-sm mt-1">
+              <p className="text-error text-sm">
                 {errors.description.message}
               </p>
             )}
@@ -84,7 +83,7 @@ const NewTask = () => {
           <div className="justify-center card-actions mt-6">
             <button
               type="submit"
-              className="btn btn-success min-w-[150px] text-white"
+              className="btn btn-success min-w-37.5 text-white"
             >
               Criar
             </button>

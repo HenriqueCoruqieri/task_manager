@@ -7,7 +7,7 @@ import { useState } from "react"
 const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
   return (
-    <div className="p-4">
+    <div className="p-">
       <div className="tabs justify-center gap-2 p-2">
         <a
           className={`tab gap-2 font-bold ${activeView === "new-task" ? "tab-active text-emerald-500" : "text-white"}`}
