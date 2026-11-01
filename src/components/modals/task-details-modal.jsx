@@ -1,4 +1,5 @@
 import { X } from "lucide-react"
+import { formatDisplayDate } from "../../lib/dayjs"
 
 const TaskDetailsModal = ({ dialogRef, task }) => {
   return (
@@ -8,6 +9,20 @@ const TaskDetailsModal = ({ dialogRef, task }) => {
           <h3 className="font-bold text-lg uppercase break-words min-w-0 text-emerald-500">
             {task?.title}
           </h3>
+        
+          {task?.expiration_date && (
+          <div className="flex gap-2 text-sm">
+            <p className="text-xs">
+              <span className="font-semibold text-emerald-500">Abertura: </span>
+              {formatDisplayDate(task.opening_date)}
+            </p>
+            <p className="text-xs">
+              <span className="font-semibold text-emerald-500">Vencimento: </span>
+              {formatDisplayDate(task.expiration_date)}
+            </p>
+          </div>
+        )}
+
           <button
             type="button"
             className="btn btn-sm btn-circle rounded-full shrink-0"
@@ -16,6 +31,7 @@ const TaskDetailsModal = ({ dialogRef, task }) => {
             <X />
           </button>
         </div>
+        
         <p className="text-sm whitespace-pre-wrap break-words max-h-[60vh] scrollbar-dark pr-2">
           {task?.description}
         </p>

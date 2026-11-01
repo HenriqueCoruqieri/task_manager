@@ -2,6 +2,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useToast } from "../../hooks/use-toast"
+import { getToday, isBeforeDate } from "../../lib/dayjs"
 import ToastMessage from "../toast-message"
 import DateField from "../date-field"
 
@@ -9,6 +10,12 @@ import DateField from "../date-field"
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
+  opening_date: z.iso.date({message: "Informe a data de abertura"}),
+  expiration_date: z.iso.date({message: "Informe a data do vencimento"})
+})
+.refine((data) => !isBeforeDate(data.expiration_date, data.opeing_date), {
+  message: "O vencimento não pode ser antes da abertura",
+  path: ["expiration_date"],
 })
 
 const NewTask = () => {
@@ -19,7 +26,10 @@ const NewTask = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ resolver: zodResolver(schema) })
+  } = useForm({ 
+    resolver: zodResolver(schema),
+    defaultValues: {opening_date: getToday()},
+  })
 
   const onSubmit = async (data) => {
     const userId = localStorage.getItem("userId")

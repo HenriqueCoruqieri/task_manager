@@ -43,6 +43,7 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 | [DaisyUI 5](https://daisyui.com/)               | Componentes e tema           |
 | [React Hook Form](https://react-hook-form.com/) | Gerenciamento de formulários |
 | [Zod](https://zod.dev/)                         | Validação de schemas         |
+| [Day.js](https://day.js.org/)                   | Manipulação de datas         |
 | [Lucide React](https://lucide.dev/)             | Ícones                       |
 
 ### Backend
@@ -113,10 +114,14 @@ task_manager/
 ├── src/                            # Frontend (React + Vite)
 │   ├── App.jsx                     # Rotas da aplicação
 │   ├── main.jsx                    # Entry point React
+│   ├── constants/
+│   │   └── routes.js               # Caminhos das rotas (fonte única)
 │   ├── context/
 │   │   └── user-context.jsx        # Estado global do usuário
 │   ├── hooks/
 │   │   └── use-toast.js            # Estado e controle do ToastMessage
+│   ├── lib/
+│   │   └── dayjs.js                # Configuração do Day.js e helpers de data
 │   ├── pages/                      # Páginas por rota
 │   │   ├── login.jsx
 │   │   ├── home.jsx
@@ -129,11 +134,13 @@ task_manager/
 │       ├── user-menu.jsx
 │       ├── task-card.jsx
 │       ├── toast-message.jsx
+│       ├── date-field.jsx          # Campo de data integrado ao React Hook Form
 │       ├── modals/                 # Modais reutilizáveis
 │       │   ├── register-form-modal.jsx
 │       │   ├── edit-image-modal.jsx
 │       │   ├── edit-password-modal.jsx
-│       │   └── delete-account-modal.jsx
+│       │   ├── delete-account-modal.jsx
+│       │   └── task-details-modal.jsx
 │       └── task-book/              # Módulo de tarefas
 │           ├── task-book.jsx
 │           ├── new-task.jsx
@@ -165,12 +172,14 @@ A senha é hasheada automaticamente via hook `pre("save")` do Mongoose antes de 
 
 ### Task
 
-| Campo         | Tipo       | Descrição                                            |
-| ------------- | ---------- | ---------------------------------------------------- |
-| `title`       | `String`   | Título da tarefa (obrigatório)                       |
-| `description` | `String`   | Descrição da tarefa (obrigatório)                    |
-| `isCompleted` | `Boolean`  | Status de conclusão (padrão: `false`)                |
-| `user_id`     | `ObjectId` | Referência ao usuário dono da tarefa (`ref: "User"`) |
+| Campo             | Tipo       | Descrição                                            |
+| ----------------- | ---------- | ---------------------------------------------------- |
+| `title`           | `String`   | Título da tarefa (obrigatório)                       |
+| `description`     | `String`   | Descrição da tarefa (obrigatório)                    |
+| `isCompleted`     | `Boolean`  | Status de conclusão (padrão: `false`)                |
+| `opening_date`    | `Date`     | Data de abertura (obrigatório, padrão: data atual)   |
+| `expiration_date` | `Date`     | Data de vencimento (obrigatório)                     |
+| `user_id`         | `ObjectId` | Referência ao usuário dono da tarefa (`ref: "User"`) |
 
 ### Relacionamento
 
@@ -221,13 +230,15 @@ Base URL: `http://localhost:8000`
 
 ## Rotas do frontend
 
-| Rota                                  | Página                 |
-| ------------------------------------- | ---------------------- |
-| `/`                                   | Login                  |
-| `/:username/home`                | Home (tarefas)         |
-| `/:username/home/profile`        | Perfil do usuário      |
-| `/:username/home/account`        | Configurações de conta |
-| `/:username/home/completedtasks` | Tarefas concluídas     |
+| Rota                              | Página                 |
+| --------------------------------- | ---------------------- |
+| `/`                               | Login                  |
+| `/:username/home`                 | Home (tarefas)         |
+| `/:username/home/profile`         | Perfil do usuário      |
+| `/:username/home/account`         | Configurações de conta |
+| `/:username/home/completed-tasks` | Tarefas concluídas     |
+
+Os caminhos ficam centralizados em `src/constants/routes.js` (`ROUTES`). Para navegar, use `generatePath(ROUTES.x, { username })`.
 
 ---
 

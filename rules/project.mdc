@@ -9,7 +9,7 @@ Aplicação full-stack de gerenciamento de tarefas pessoais. Monorepo com fronte
 
 ## Stack obrigatória
 
-**Frontend (raiz):** React 19, Vite 8, React Router DOM 7, Tailwind CSS 4, DaisyUI 5, React Hook Form, Zod (`@hookform/resolvers`), Lucide React.
+**Frontend (raiz):** React 19, Vite 8, React Router DOM 7, Tailwind CSS 4, DaisyUI 5, React Hook Form, Zod (`@hookform/resolvers`), Day.js, Lucide React.
 
 **Backend (`backend/`):** Node.js, Express 5, Mongoose 9, bcryptjs, jose (JWT), cors, dotenv.
 
@@ -40,20 +40,22 @@ Novos arquivos e pastas: **kebab-case**. Componentes React: export default com n
 - Autenticação: `localStorage` guarda `token` e `userId`. Logout limpa ambos.
 - Chamadas HTTP com **`fetch` nativo** — base URL `http://localhost:8000`.
 - Mapear camelCase do formulário para snake_case da API (ex: `firstName` → `first_name`).
+- Datas: usar os helpers de `src/lib/dayjs.js` (`getToday`, `isBeforeDate`, `formatDisplayDate`). Não importar `dayjs` diretamente nos componentes nem criar datas com `new Date()`.
 
 ### Rotas do frontend
 
-| Rota                                  | Página             |
-| ------------------------------------- | ------------------ |
-| `/`                                   | Login              |
-| `/:username/dashboard`                | Dashboard          |
-| `/:username/dashboard/profile`        | Perfil             |
-| `/:username/dashboard/account`        | Conta              |
-| `/:username/dashboard/completedtasks` | Tarefas concluídas |
+| Rota                              | Página             |
+| --------------------------------- | ------------------ |
+| `/`                               | Login              |
+| `/:username/home`                 | Home               |
+| `/:username/home/profile`         | Perfil             |
+| `/:username/home/account`         | Conta              |
+| `/:username/home/completed-tasks` | Tarefas concluídas |
 
 Páginas autenticadas usam layout com `Header`, `UserMenu` e `Footer`.
 
-- Caso necessário criar uma nova rota, siga o mesmo padrão, por exemplo: `/:username/dashboard/nome-da-nova-rota`
+- Caminhos definidos somente em `src/constants/routes.js` (`ROUTES`). Nunca escrever o caminho como string solta: usar `ROUTES.x` no `<Route>` e `generatePath(ROUTES.x, { username })` em `Link`/`navigate`.
+- Caso necessário criar uma nova rota, adicione-a em `ROUTES` seguindo o padrão `/:username/home/nome-da-nova-rota`.
 
 ## Formulários (React Hook Form + Zod)
 
