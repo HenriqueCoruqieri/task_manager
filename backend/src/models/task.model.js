@@ -21,6 +21,17 @@ const TaskSchema = Schema({
     ref: "User",
     required: true,
   },
+
+  opening_date: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+
+  expiration_date: {
+    type: Date,
+    required: true,
+  },
 }, {timestamps: true}) 
 
 const TaskModel = model("Task", TaskSchema)
