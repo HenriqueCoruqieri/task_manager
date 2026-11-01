@@ -1,7 +1,8 @@
 import { useUser } from "../context/user-context"
 
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, generatePath, useNavigate, useParams } from "react-router-dom"
 import { LogOut } from "lucide-react"
+import { ROUTES } from "../constants/routes"
 
 const Header = () => {
   const { username } = useParams()
@@ -12,13 +13,13 @@ const Header = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("userId")
     setUserData(null)
-    navigate("/")
+    navigate(ROUTES.login)
   }
 
   return (
     <div className="navbar bg-emerald-600 shadow-sm">
       <div className="navbar-start">
-        <Link to={`/${username}/home`} className="btn btn-ghost text-xl">
+        <Link to={generatePath(ROUTES.home, { username })} className="btn btn-ghost text-xl">
           Home
         </Link>
       </div>
@@ -27,7 +28,7 @@ const Header = () => {
         <img
           alt="Pen Header Image"
           src="/header_image.png"
-          className="w-[300px] h-[55px]"
+          className="w-75 h-13.75"
         />
       </div>
 

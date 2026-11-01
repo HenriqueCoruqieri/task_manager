@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useRef } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, generatePath } from "react-router-dom"
+import { ROUTES } from "../constants/routes"
 
 import { UserRoundKey } from "lucide-react"
 
@@ -42,7 +43,7 @@ const Login = () => {
       localStorage.setItem("token", token)
       localStorage.setItem("userId", id)
       await fetchUser()
-      navigate(`/${username}/dashboard`)
+      navigate(generatePath(ROUTES.home, { username }))
     } else {
       showToast("Usuário ou senha inválidos.", "error")
     }

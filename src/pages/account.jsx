@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import { ROUTES } from "../constants/routes"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -19,7 +20,7 @@ const Account = () => {
     if (response.ok) {
       localStorage.removeItem("token")
       localStorage.removeItem("userId")
-      navigate("/")
+      navigate(ROUTES.login)
     } else {
       const error = await response.json()
       console.error(error)

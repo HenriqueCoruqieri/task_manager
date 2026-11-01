@@ -11,7 +11,7 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 | Tela               | Descrição                                 |
 | ------------------ | ----------------------------------------- |
 | Login / Cadastro   | Autenticação com validação de formulários |
-| Dashboard          | Criação e listagem de tarefas pendentes   |
+| Home               | Criação e listagem de tarefas pendentes   |
 | Tarefas concluídas | Histórico de tarefas finalizadas          |
 | Perfil             | Foto de perfil e alteração de senha       |
 | Conta              | Exclusão de conta e dados associados      |
@@ -119,7 +119,7 @@ task_manager/
 │   │   └── use-toast.js            # Estado e controle do ToastMessage
 │   ├── pages/                      # Páginas por rota
 │   │   ├── login.jsx
-│   │   ├── dashboard.jsx
+│   │   ├── home.jsx
 │   │   ├── profile.jsx
 │   │   ├── account.jsx
 │   │   └── completed-tasks.jsx
@@ -224,10 +224,10 @@ Base URL: `http://localhost:8000`
 | Rota                                  | Página                 |
 | ------------------------------------- | ---------------------- |
 | `/`                                   | Login                  |
-| `/:username/dashboard`                | Dashboard (tarefas)    |
-| `/:username/dashboard/profile`        | Perfil do usuário      |
-| `/:username/dashboard/account`        | Configurações de conta |
-| `/:username/dashboard/completedtasks` | Tarefas concluídas     |
+| `/:username/home`                | Home (tarefas)         |
+| `/:username/home/profile`        | Perfil do usuário      |
+| `/:username/home/account`        | Configurações de conta |
+| `/:username/home/completedtasks` | Tarefas concluídas     |
 
 ---
 

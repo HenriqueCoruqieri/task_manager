@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { UserProvider } from "./context/user-context"
+import { ROUTES } from "./constants/routes"
 import Login from "./pages/login"
 import Home from "./pages/home"
 import Profile from "./pages/profile"
@@ -11,14 +12,11 @@ function App() {
     <BrowserRouter>
       <UserProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/:username/home" element={<Home />} />
-          <Route path="/:username/dashboard/profile" element={<Profile />} />
-          <Route path="/:username/dashboard/account" element={<Account />} />
-          <Route
-            path="/:username/dashboard/completedtasks"
-            element={<CompletedTasks />}
-          />
+          <Route path={ROUTES.login} element={<Login />} />
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.profile} element={<Profile />} />
+          <Route path={ROUTES.account} element={<Account />} />
+          <Route path={ROUTES.completedTasks} element={<CompletedTasks />}/>
         </Routes>
       </UserProvider>
     </BrowserRouter>

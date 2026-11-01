@@ -1,5 +1,6 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, generatePath } from "react-router-dom"
 import { useUser } from "../context/user-context"
+import { ROUTES } from "../constants/routes"
 
 const UserMenu = () => {
   const { username } = useParams()
@@ -17,13 +18,13 @@ const UserMenu = () => {
         </summary>
         <ul className="menu dropdown-content font-semibold bg-emerald-600 z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
           <li>
-            <Link to={`/${username}/dashboard/profile`}>Perfil</Link>
+            <Link to={generatePath(ROUTES.profile, { username })}>Perfil</Link>
           </li>
           <li>
-            <Link to={`/${username}/dashboard/account`}>Conta</Link>
+            <Link to={generatePath(ROUTES.account, { username })}>Conta</Link>
           </li>
           <li>
-            <Link to={`/${username}/dashboard/completedtasks`}>
+            <Link to={generatePath(ROUTES.completedTasks, { username })}>
               Tarefas concluídas
             </Link>
           </li>
