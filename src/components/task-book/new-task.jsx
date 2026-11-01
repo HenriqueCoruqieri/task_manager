@@ -1,8 +1,10 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import ToastMessage from "../toast-message"
 import { useToast } from "../../hooks/use-toast"
+import ToastMessage from "../toast-message"
+import DateField from "../date-field"
+
 
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -78,6 +80,11 @@ const NewTask = () => {
                 {errors.description.message}
               </p>
             )}
+          </div>
+
+          <div className="flex space-x-4 items-center justify-center">
+            <DateField label="Abertura" register={register("opening_date")} error={errors.opening_date} />
+            <DateField label="Vencimento" register={register("expiration_date")} error={errors.expiration_date} />
           </div>
 
           <div className="justify-center card-actions mt-6">
