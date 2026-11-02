@@ -94,7 +94,7 @@ const TaskList = () => {
   }
 
   return (
-    <div className="min-w-[500px] flex flex-col min-h-0 pb-6">
+    <div className="min-w-125 flex flex-col min-h-0 pb-6">
       <ToastMessage
         visible={toast.visible}
         message={toast.message}
@@ -140,7 +140,7 @@ const TaskList = () => {
       <div className="flex mt-4 justify-center">
         <button
           disabled={selectedTask.length === 0}
-          className="btn btn-success rounded-md w-37.5 "
+          className="btn btn-success rounded-md w-37.5"
           onClick={handleComplete}
         >
           Concluir

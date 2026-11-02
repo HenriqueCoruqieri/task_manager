@@ -1,32 +1,28 @@
-import { BookOpenText, StickyNotePlus } from "lucide-react"
-import NewTask from "./new-task"
-import TaskList from "./task-list"
-
 import { useState } from "react"
+import { TABS } from "./constants/task-book-tabs"
 
 const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
+
+  const ActiveComponent = TABS.find((tab) => tab.id == activeView).Component
+
   return (
     <div className="flex flex-col flex-1 min-h-0">
       <div className="tabs justify-center gap-2 p-2">
-        <a
-          className={`tab gap-2 font-bold ${activeView === "new-task" ? "tab-active text-emerald-500" : "text-white"}`}
-          onClick={() => setActiveView("new-task")}
-        >
-          <StickyNotePlus className="size-4" />
-          Nova Tarefa
-        </a>
-        <a
-          className={`tab gap-2 font-bold ${activeView === "tasks" ? "tab-active text-emerald-500" : "text-white"}`}
-          onClick={() => setActiveView("tasks")}
-        >
-          <BookOpenText className="size-4" />
-          Tarefas
-        </a>
+        {TABS.map(({ id, label, icon: Icon}) => (
+          <a 
+          key={id} 
+          className={`tab gap-2 font-bold ${activeView == id? "tab-active text-emerald-500" : "text-white"}`}
+          onClick={() => setActiveView(id)}
+          >
+          <Icon className="size-4"/>
+          {label}
+          </a>
+        ))}
       </div>
 
       <div className="flex flex-col ">
-        {activeView == "new-task" ? <NewTask /> : <TaskList />}
+        <ActiveComponent />
       </div>
     </div>
   )
