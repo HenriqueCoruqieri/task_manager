@@ -1,27 +1,24 @@
 import { X } from "lucide-react"
-import { formatDisplayDate } from "../../lib/dayjs"
+import DateField from "../date-field"
 
 const TaskDetailsModal = ({ dialogRef, task }) => {
   return (
     <dialog ref={dialogRef} className="modal">
       <div className="modal-box">
         <div className="flex justify-between items-start gap-4 mb-2">
-          <h3 className="font-bold text-lg uppercase break-words min-w-0 text-emerald-500">
-            {task?.title}
-          </h3>
-        
-          {task?.expiration_date && (
-          <div className="flex gap-2 text-sm">
-            <p className="text-xs">
-              <span className="font-semibold text-emerald-500">Abertura: </span>
-              {formatDisplayDate(task.opening_date)}
-            </p>
-            <p className="text-xs">
-              <span className="font-semibold text-emerald-500">Vencimento: </span>
-              {formatDisplayDate(task.expiration_date)}
-            </p>
+          <div className="flex flex-col">
+            <h1 className="font-bold text-lg uppercase wrap-break-word min-w-0 text-emerald-500">
+              {task?.title}
+            </h1>
+
+            {task?.expiration_date && (
+              <div className="flex gap-2">
+                <DateField label="Abertura" date={task.opening_date} />
+                <DateField label="Vencimento" date={task.expiration_date} />
+              </div>
+            )}
+
           </div>
-        )}
 
           <button
             type="button"

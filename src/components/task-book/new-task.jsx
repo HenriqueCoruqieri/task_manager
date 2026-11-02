@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { useToast } from "../../hooks/use-toast"
 import { getToday, isBeforeDate } from "../../lib/dayjs"
 import ToastMessage from "../toast-message"
-import DateField from "../date-field"
+import DateSelector from "../date-selector"
 
 
 const schema = z.object({
@@ -93,8 +93,8 @@ const NewTask = () => {
           </div>
 
           <div className="flex space-x-4 items-center justify-center">
-            <DateField label="Abertura" register={register("opening_date")} error={errors.opening_date} />
-            <DateField label="Vencimento" register={register("expiration_date")} error={errors.expiration_date} />
+            <DateSelector label="Abertura" register={register("opening_date")} error={errors.opening_date} />
+            <DateSelector label="Vencimento" register={register("expiration_date")} error={errors.expiration_date} />
           </div>
 
           <div className="justify-center card-actions mt-6">

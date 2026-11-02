@@ -140,7 +140,7 @@ const TaskList = () => {
       <div className="flex mt-4 justify-center">
         <button
           disabled={selectedTask.length === 0}
-          className="btn btn-success rounded-md w-37.5 ml-19"
+          className="btn btn-success rounded-md w-37.5 "
           onClick={handleComplete}
         >
           Concluir
