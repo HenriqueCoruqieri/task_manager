@@ -5,7 +5,7 @@ const TaskDetailsModal = ({ dialogRef, task }) => {
   return (
     <dialog ref={dialogRef} className="modal">
       <div className="modal-box">
-        <div className="flex justify-between items-start gap-4 mb-4">
+        <div className="flex justify-between items-start gap-4 mb-2">
           <h3 className="font-bold text-lg uppercase break-words min-w-0 text-emerald-500">
             {task?.title}
           </h3>

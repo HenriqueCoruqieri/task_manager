@@ -17,7 +17,7 @@ export default defineConfig([
   },
 
   {
-    files: ["src/**/*.{js, jsx}"],
+    files: ["src/**/*.{js,jsx}"],
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,

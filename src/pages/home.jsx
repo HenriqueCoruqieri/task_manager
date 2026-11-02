@@ -1,11 +1,9 @@
-import { useParams } from "react-router-dom"
 import UserMenu from "../components/user-menu"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import TaskBook from "../components/task-book/task-book"
 
 const Home = () => {
-  const { username } = useParams()
 
   return (
     <div className="flex flex-col h-screen">

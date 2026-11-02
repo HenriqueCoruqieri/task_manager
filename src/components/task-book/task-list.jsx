@@ -1,18 +1,11 @@
 import { useEffect, useRef, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 
-import { PencilLine, Trash2, X } from "lucide-react"
+import { Trash2, PencilLine } from "lucide-react"
 import TaskCard from "../task-card"
 import ToastMessage from "../toast-message"
 import TaskDetailsModal from "../modals/task-details-modal"
 import { useToast } from "../../hooks/use-toast"
-
-const schema = z.object({
-  title: z.string().min(1, "Informe o novo título da tarefa"),
-  description: z.string().min(1, "Digite a nova descrição da tarefa"),
-})
+import EditTaskModal from "../modals/edit-task-modal"
 
 const TaskList = () => {
   const { toast, showToast, dismissToast } = useToast()
@@ -36,16 +29,8 @@ const TaskList = () => {
     fetchTasks()
   }, [])
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({ resolver: zodResolver(schema) })
-
   const handleEdit = (task) => {
     setEditingTask(task)
-    reset({ title: task.title, description: task.description })
     dialogRef.current.showModal()
   }
 
@@ -155,7 +140,7 @@ const TaskList = () => {
       <div className="flex mt-4 justify-center">
         <button
           disabled={selectedTask.length === 0}
-          className="btn btn-success rounded-md w-[150px] ml-19"
+          className="btn btn-success rounded-md w-37.5 ml-19"
           onClick={handleComplete}
         >
           Concluir
@@ -163,71 +148,11 @@ const TaskList = () => {
       </div>
 
       <TaskDetailsModal dialogRef={viewDialogRef} task={viewingTask} />
-
-      <dialog ref={dialogRef} className="modal">
-        <div className="modal-box">
-          <div className="flex justify-between">
-            <div className="flex gap-2 mt-1">
-              <PencilLine />
-              <h3 className="font-bold text-lg mb-4">Editar Tarefa</h3>
-            </div>
-            <button
-              type="button"
-              className="btn btn-sm btn-circle rounded-full"
-              onClick={() => dialogRef.current.close()}
-            >
-              <X />
-            </button>
-          </div>
-
-          <form
-            onSubmit={handleSubmit(onEditSubmit)}
-            className="flex flex-col space-y-4"
-            noValidate
-          >
-            <div>
-              <h2>Novo título</h2>
-              <input
-                {...register("title")}
-                type="text"
-                placeholder="Título"
-                className="input input-bordered w-full"
-              />
-              {errors.title && (
-                <p className="text-error text-sm mt-1">
-                  {errors.title.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <h2>Nova descrição</h2>
-              <input
-                {...register("description")}
-                type="text"
-                placeholder="Descrição"
-                className="input input-bordered w-full"
-              />
-              {errors.description && (
-                <p className="text-error text-sm mt-1">
-                  {errors.description.message}
-                </p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              className="btn btn-success text-white rounded-full mt-2"
-            >
-              Salvar
-            </button>
-          </form>
-        </div>
-
-        <form method="dialog" className="modal-backdrop">
-          <button>fechar</button>
-        </form>
-      </dialog>
+      <EditTaskModal
+        dialogRef={dialogRef}
+        task={editingTask}
+        onSave={onEditSubmit}
+      />
     </div>
   )
 }
