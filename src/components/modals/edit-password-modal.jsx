@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { KeyRound, X } from "lucide-react"
+import FieldError from "../field-error"
 
 const schema = z
   .object({
@@ -46,35 +47,27 @@ const EditPasswordModal = ({ dialogRef, onSave }) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-4"
+          className="flex flex-col space-y-6"
           noValidate
         >
-          <div>
+          <div className="relative">
             <input
               {...register("password")}
               type="password"
               placeholder="Nova senha"
               className="input input-bordered w-full"
             />
-            {errors.password && (
-              <p className="text-error text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
+            <FieldError error={errors.password} />
           </div>
 
-          <div>
+          <div className="relative">
             <input
               {...register("confirmPassword")}
               type="password"
               placeholder="Confirmar nova senha"
               className="input input-bordered w-full"
             />
-            {errors.confirmPassword && (
-              <p className="text-error text-sm mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+            <FieldError error={errors.confirmPassword} />
           </div>
 
           <button

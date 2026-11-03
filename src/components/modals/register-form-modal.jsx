@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { NotebookPen, X } from "lucide-react"
+import FieldError from "../field-error"
 
 const schema = z
   .object({
@@ -68,77 +69,57 @@ const RegisterFormModal = ({ dialogRef, onSave }) => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-4"
+            className="flex flex-col space-y-6"
             noValidate
           >
-            <div>
+            <div className="relative">
               <input
                 {...register("firstName")}
                 type="text"
                 placeholder="Nome"
                 className="input input-bordered w-full"
               />
-              {errors.firstName && (
-                <p className="text-error text-sm mt-1">
-                  {errors.firstName.message}
-                </p>
-              )}
+              <FieldError error={errors.firstName} />
             </div>
 
-            <div>
+            <div className="relative">
               <input
                 {...register("lastName")}
                 type="text"
                 placeholder="Sobrenome"
                 className="input input-bordered w-full"
               />
-              {errors.lastName && (
-                <p className="text-error text-sm mt-1">
-                  {errors.lastName.message}
-                </p>
-              )}
+              <FieldError error={errors.lastName} />
             </div>
 
-            <div>
+            <div className="relative">
               <input
                 {...register("email")}
                 type="email"
                 placeholder="Email"
                 className="input input-bordered w-full"
               />
-              {errors.email && (
-                <p className="text-error text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
+              <FieldError error={errors.email} />
             </div>
 
-            <div>
+            <div className="relative">
               <input
                 {...register("password")}
                 type="password"
                 placeholder="Senha"
                 className="input input-bordered w-full"
               />
-              {errors.password && (
-                <p className="text-error text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
+              <FieldError error={errors.password} />
             </div>
 
-            <div>
+            <div className="relative">
               <input
                 {...register("confirmPassword")}
                 type="password"
                 placeholder="Confirmar Senha"
                 className="input input-bordered w-full"
               />
-              {errors.confirmPassword && (
-                <p className="text-error text-sm mt-1">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
+              <FieldError error={errors.confirmPassword} />
             </div>
 
             <button

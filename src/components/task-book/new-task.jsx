@@ -6,12 +6,17 @@ import { getToday, isBeforeDate } from "../../lib/dayjs"
 import ToastMessage from "../toast-message"
 import DateSelector from "../date-selector"
 import { createTask } from "../../services/task-service"
+import FieldError from "../field-error"
+
+const isNotPastDate = (date) => !isBeforeDate(date, getToday())
 
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
-  opening_date: z.iso.date({message: "Informe a data de abertura"}),
-  expiration_date: z.iso.date({message: "Informe a data do vencimento"})
+  opening_date: z.iso.date({message: "Informe a abertura"})
+    .refine(isNotPastDate, {message: "Data inválida"}),
+  expiration_date: z.iso.date({message: "Informe o vencimento"})
+    .refine(isNotPastDate, {message: "Data inválida"}),
 })
 .refine((data) => !isBeforeDate(data.expiration_date, data.opening_date), {
   message: "O vencimento não pode ser antes da abertura",
@@ -58,10 +63,10 @@ const NewTask = ({setTasks}) => {
       <div className="card-body card-md">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
+          className="space-y-6"
           noValidate
         >
-          <div className="space-y-1">
+          <div className="relative flex flex-col gap-1">
             <h2 className="card-title card-actions text-emerald-500">
               Título da Tarefa
             </h2>
@@ -70,12 +75,10 @@ const NewTask = ({setTasks}) => {
               type="text"
               className="input input-sm w-full border border-emerald-500"
             />
-            {errors.title && (
-              <p className="text-error text-sm ">{errors.title.message}</p>
-            )}
+            <FieldError error={errors.title} />
           </div>
 
-          <div className="space-y-1">
+          <div className="relative flex flex-col gap-1">
             <h2 className="card-title card-actions text-emerald-500">
               Descrição
             </h2>
@@ -83,11 +86,7 @@ const NewTask = ({setTasks}) => {
               {...register("description")}
               className="textarea textarea-sm w-full h-20 resize-none scrollbar-dark border border-emerald-500 leading-normal"
             />
-            {errors.description && (
-              <p className="text-error text-sm">
-                {errors.description.message}
-              </p>
-            )}
+            <FieldError error={errors.description} />
           </div>
 
           <div className="flex space-x-4 items-center justify-center">

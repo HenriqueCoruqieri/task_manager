@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { X, Pencil } from "lucide-react"
+import FieldError from "../field-error"
 
 const schema = z.object({
     title: z.string().min(1, "Informe o novo título da tarefa"),
@@ -42,10 +43,10 @@ const EditTaskModal = ({dialogRef, task, onSave}) => {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-4"
+            className="flex flex-col space-y-6"
             noValidate
           >
-            <div>
+            <div className="relative">
               <h2>Novo título</h2>
               <input
                 {...register("title")}
@@ -53,14 +54,10 @@ const EditTaskModal = ({dialogRef, task, onSave}) => {
                 placeholder="Título"
                 className="input input-bordered w-full"
               />
-              {errors.title && (
-                <p className="text-error text-sm mt-1">
-                  {errors.title.message}
-                </p>
-              )}
+              <FieldError error={errors.title} />
             </div>
 
-            <div>
+            <div className="relative">
               <h2>Nova descrição</h2>
               <textarea
                 {...register("description")}
@@ -68,11 +65,7 @@ const EditTaskModal = ({dialogRef, task, onSave}) => {
                 placeholder="Descrição"
                 className="textarea textarea-sm w-full h-20 resize-none scrollbar-dark border leading-normal"
               />
-              {errors.description && (
-                <p className="text-error text-sm mt-1">
-                  {errors.description.message}
-                </p>
-              )}
+              <FieldError error={errors.description} />
             </div>
 
             <button

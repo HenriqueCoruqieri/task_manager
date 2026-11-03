@@ -11,6 +11,7 @@ import RegisterFormModal from "../components/modals/register-form-modal"
 import { useUser } from "../context/user-context"
 import ToastMessage from "../components/toast-message"
 import { useToast } from "../hooks/use-toast"
+import FieldError from "../components/field-error"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
@@ -92,31 +93,25 @@ const Login = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className="flex flex-col gap-4 mt-12">
-          <div>
+        <div className="flex flex-col gap-6 mt-8">
+          <div className="relative">
             <input
               {...register("email")}
               type="email"
               placeholder="Email"
               className="input input-lg w-100"
             />
-            {errors.email && (
-              <p className="text-error text-sm mt-1">{errors.email.message}</p>
-            )}
+            <FieldError error={errors.email} />
           </div>
 
-          <div>
+          <div className="relative">
             <input
               {...register("password")}
               type="password"
               placeholder="Senha"
               className="input input-lg w-100"
             />
-            {errors.password && (
-              <p className="text-error text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
+            <FieldError error={errors.password} />
           </div>
         </div>
 

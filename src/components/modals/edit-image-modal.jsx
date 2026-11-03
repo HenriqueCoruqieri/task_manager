@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Camera, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import FieldError from "../field-error"
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2MB
 
@@ -55,19 +56,17 @@ const EditImageModal = ({ dialogRef, onSave }) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-4"
+          className="flex flex-col space-y-6"
           noValidate
         >
-          <div>
+          <div className="relative">
             <input
               {...register("image")}
               type="file"
               accept="image/*"
               className="file-input file-input-bordered w-full"
             />
-            {errors.image && (
-              <p className="text-error text-sm mt-1">{errors.image.message}</p>
-            )}
+            <FieldError error={errors.image} />
           </div>
 
           <button
