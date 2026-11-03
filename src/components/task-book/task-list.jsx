@@ -7,7 +7,7 @@ import TaskDetailsModal from "../modals/task-details-modal"
 import { useToast } from "../../hooks/use-toast"
 import EditTaskModal from "../modals/edit-task-modal"
 
-const TaskList = () => {
+const TaskList = ({title = "Lista de Tarefas", filterTasks = () => true}) => {
   const { toast, showToast, dismissToast } = useToast()
   const [tasks, setTasks] = useState([])
   const [selectedTask, setSelectedTask] = useState([])
@@ -76,6 +76,8 @@ const TaskList = () => {
     setSelectedTask([])
   }
 
+  const visibleTasks = tasks.filter(filterTasks)
+
   return (
     <div className="min-w-125 flex flex-col min-h-0 pb-6">
       <ToastMessage
@@ -85,10 +87,10 @@ const TaskList = () => {
         onDismiss={dismissToast}
       />
       <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
-        Lista de Tarefas
+        {title}
       </p>
       <ul className="list rounded-box flex-1 min-h-0 scrollbar-dark pr-2 mt-1 space-y-4">
-        {tasks.map((task, index) => (
+        {visibleTasks.map((task, index) => (
           <li key={task._id} className="flex items-center gap-4">
             <button
               className="btn btn-sm text-yellow-500 border-3 border-solid rounded-xl"

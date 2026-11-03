@@ -22,6 +22,7 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 
 - **Autenticação** — cadastro de usuário, login com JWT e logout
 - **CRUD de tarefas** — criar, listar, editar, excluir e marcar como concluída
+- **Tarefas atrasadas** — aba que lista as tarefas não concluídas com vencimento já passado
 - **Filtro por usuário** — cada usuário visualiza apenas suas próprias tarefas
 - **Perfil** — upload de foto (Base64), troca de senha com hash no servidor
 - **Conta** — exclusão em cascata (tarefas do usuário são removidas junto com a conta)
