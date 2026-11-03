@@ -18,7 +18,7 @@ const schema = z.object({
   path: ["expiration_date"],
 })
 
-const NewTask = () => {
+const NewTask = ({setTasks}) => {
   const { toast, showToast, dismissToast } = useToast()
 
   const {
@@ -37,6 +37,8 @@ const NewTask = () => {
     const response = await createTask({...data, user_id: userId})
 
     if (response.ok) {
+      const createdTask = await response.json()
+      setTasks((current) => [...current, createdTask])
       reset()
       showToast("Tarefa criada com sucesso", "success")
     } else {

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react"
-import { deleteTask, getTasks, updateTask } from "../../services/task-service"
+import { useRef, useState } from "react"
+import { deleteTask, updateTask } from "../../services/task-service"
 import { Trash2, PencilLine } from "lucide-react"
 import TaskCard from "../task-card"
 import ToastMessage from "../toast-message"
@@ -7,25 +7,13 @@ import TaskDetailsModal from "../modals/task-details-modal"
 import { useToast } from "../../hooks/use-toast"
 import EditTaskModal from "../modals/edit-task-modal"
 
-const TaskList = ({title = "Lista de Tarefas", filterTasks = () => true}) => {
+const TaskList = ({tasks, setTasks, title = "Lista de Tarefas", filterTasks = () => true}) => {
   const { toast, showToast, dismissToast } = useToast()
-  const [tasks, setTasks] = useState([])
   const [selectedTask, setSelectedTask] = useState([])
   const [editingTask, setEditingTask] = useState(null)
   const [viewingTask, setViewingTask] = useState(null)
   const dialogRef = useRef(null)
   const viewDialogRef = useRef(null)
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const userId = localStorage.getItem("userId")
-      const response = await getTasks(userId)
-      const data = await response.json()
-      setTasks(data.filter((task) => !task.isCompleted))
-    }
-
-    fetchTasks()
-  }, [])
 
   const handleEdit = (task) => {
     setEditingTask(task)

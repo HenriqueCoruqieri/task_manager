@@ -3,9 +3,14 @@ import TaskList from "./task-list"
 
 const isTaskOverdue = (task) => isOverdue(task.expiration_date)
 
-const OverdueTasks = () =>{
+const OverdueTasks = ({tasks, setTasks}) =>{
     return (
-    <TaskList title="Tarefas Atrasadas" filterTasks={isTaskOverdue}/>
+    <TaskList 
+    tasks={tasks}
+    setTasks={setTasks}
+    title="Tarefas Atrasadas" 
+    filterTasks={isTaskOverdue}
+    />
     )
 }
 

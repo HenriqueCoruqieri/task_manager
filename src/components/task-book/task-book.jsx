@@ -1,10 +1,13 @@
 import { useState } from "react"
 import { TABS } from "./constants/task-book-tabs"
+import { useTasks } from "../../hooks/use-tasks"
 
 const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
 
   const ActiveComponent = TABS.find((tab) => tab.id == activeView).Component
+
+  const {tasks, setTasks} = useTasks()
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -22,7 +25,7 @@ const TaskBook = () => {
       </div>
 
       <div className="flex flex-col ">
-        <ActiveComponent />
+        <ActiveComponent tasks={tasks} setTasks={setTasks} />
       </div>
     </div>
   )
