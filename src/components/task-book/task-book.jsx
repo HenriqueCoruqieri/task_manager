@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { TABS } from "./constants/task-book-tabs"
 import { useTasks } from "../../hooks/use-tasks"
+import { isOverdue } from "../../lib/dayjs"
 
 const TaskBook = () => {
   const [activeView, setActiveView] = useState("new-task")
@@ -8,6 +9,8 @@ const TaskBook = () => {
   const ActiveComponent = TABS.find((tab) => tab.id == activeView).Component
 
   const {tasks, setTasks} = useTasks()
+
+  const overdueCount = tasks.filter((task) => isOverdue(task.expiration_date)).length
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -20,6 +23,11 @@ const TaskBook = () => {
           >
           <Icon className="size-4"/>
           {label}
+          {id === "overdue-task" && overdueCount > 0 && (
+            <span className="badge badge-error badge-xs absolute -top-1 -right-1 text-white">
+              {overdueCount}
+            </span>
+          )}
           </a>
         ))}
       </div>

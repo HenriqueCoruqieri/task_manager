@@ -6,8 +6,11 @@ import ToastMessage from "../toast-message"
 import TaskDetailsModal from "../modals/task-details-modal"
 import { useToast } from "../../hooks/use-toast"
 import EditTaskModal from "../modals/edit-task-modal"
+import { isOverdue } from "../../lib/dayjs"
 
-const TaskList = ({tasks, setTasks, title = "Lista de Tarefas", filterTasks = () => true}) => {
+const isTaskNotOverdue = (task) => !isOverdue(task.expiration_date)
+
+const TaskList = ({tasks, setTasks, title = "Lista de Tarefas", filterTasks = isTaskNotOverdue}) => {
   const { toast, showToast, dismissToast } = useToast()
   const [selectedTask, setSelectedTask] = useState([])
   const [editingTask, setEditingTask] = useState(null)
