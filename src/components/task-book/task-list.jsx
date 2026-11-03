@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-
+import { deleteTask, getTasks, updateTask } from "../../services/task-service"
 import { Trash2, PencilLine } from "lucide-react"
 import TaskCard from "../task-card"
 import ToastMessage from "../toast-message"
@@ -19,9 +19,7 @@ const TaskList = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       const userId = localStorage.getItem("userId")
-      const response = await fetch(
-        `http://localhost:8000/tasks?user_id=${userId}`
-      )
+      const response = await getTasks(userId)
       const data = await response.json()
       setTasks(data.filter((task) => !task.isCompleted))
     }
@@ -40,14 +38,7 @@ const TaskList = () => {
   }
 
   const onEditSubmit = async (data) => {
-    const response = await fetch(
-      `http://localhost:8000/tasks/${editingTask._id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    )
+    const response = await updateTask(editingTask._id, data)
 
     if (response.ok) {
       const updatedTask = await response.json()
@@ -64,9 +55,7 @@ const TaskList = () => {
   }
 
   const handleDelete = async (taskId) => {
-    const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
-      method: "DELETE",
-    })
+    const response = await deleteTask(taskId)
 
     if (response.ok) {
       setTasks((current) => current.filter((t) => t._id !== taskId))
@@ -80,13 +69,7 @@ const TaskList = () => {
 
   const handleComplete = async () => {
     await Promise.all(
-      selectedTask.map((id) =>
-        fetch(`http://localhost:8000/tasks/${id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ isCompleted: true }),
-        })
-      )
+      selectedTask.map((id) => updateTask(id, {isCompleted: true}))
     )
 
     setTasks((current) => current.filter((t) => !selectedTask.includes(t._id)))

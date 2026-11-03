@@ -5,7 +5,7 @@ import { useToast } from "../../hooks/use-toast"
 import { getToday, isBeforeDate } from "../../lib/dayjs"
 import ToastMessage from "../toast-message"
 import DateSelector from "../date-selector"
-
+import { createTask } from "../../services/task-service"
 
 const schema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -13,7 +13,7 @@ const schema = z.object({
   opening_date: z.iso.date({message: "Informe a data de abertura"}),
   expiration_date: z.iso.date({message: "Informe a data do vencimento"})
 })
-.refine((data) => !isBeforeDate(data.expiration_date, data.opeing_date), {
+.refine((data) => !isBeforeDate(data.expiration_date, data.opening_date), {
   message: "O vencimento não pode ser antes da abertura",
   path: ["expiration_date"],
 })
@@ -34,11 +34,7 @@ const NewTask = () => {
   const onSubmit = async (data) => {
     const userId = localStorage.getItem("userId")
 
-    const response = await fetch("http://localhost:8000/tasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, user_id: userId }),
-    })
+    const response = await createTask({...data, user_id: userId})
 
     if (response.ok) {
       reset()

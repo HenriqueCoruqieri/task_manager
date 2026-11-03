@@ -8,6 +8,9 @@ const OUTPUT_DATE_FORMAT = "DD/MM/YYYY"
 
 export const getToday = () => dayjs().format(INPUT_DATE_FORMAT)
 
+export const isOverdue = (date) =>
+    dayjs.utc(date).format(INPUT_DATE_FORMAT) < getToday()
+
 export const isBeforeDate = (date, dateToCompare) => 
     dayjs(date).isBefore(dayjs(dateToCompare))
 

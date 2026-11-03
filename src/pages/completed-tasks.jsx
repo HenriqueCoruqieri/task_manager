@@ -5,6 +5,7 @@ import TaskCard from "../components/task-card"
 
 import { useEffect, useState } from "react"
 import { SquareCheckBig } from "lucide-react"
+import { getTasks } from "../services/task-service"
 
 const CompletedTasks = () => {
   const [tasks, setTasks] = useState([])
@@ -12,9 +13,7 @@ const CompletedTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       const userId = localStorage.getItem("userId")
-      const response = await fetch(
-        `http://localhost:8000/tasks/?user_id=${userId}`
-      )
+      const response = await getTasks(userId)
       const data = await response.json()
       setTasks(data.filter((tasks) => tasks.isCompleted))
     }

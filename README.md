@@ -11,7 +11,7 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 | Tela               | Descrição                                 |
 | ------------------ | ----------------------------------------- |
 | Login / Cadastro   | Autenticação com validação de formulários |
-| Home               | Criação e listagem de tarefas pendentes   |
+| Home               | Criação de tarefas e menu de navegação    |
 | Tarefas concluídas | Histórico de tarefas finalizadas          |
 | Perfil             | Foto de perfil e alteração de senha       |
 | Conta              | Exclusão de conta e dados associados      |
@@ -95,6 +95,7 @@ O projeto segue uma arquitetura **cliente-servidor** com repositório monolític
 task_manager/
 ├── backend/                        # API REST (Node.js + Express)
 │   ├── index.js                    # Entry point do servidor
+│   ├── package.json                # Dependências do backend
 │   └── src/
 │       ├── controllers/            # Lógica de negócio
 │       │   ├── task.controller.js
@@ -113,7 +114,10 @@ task_manager/
 │
 ├── src/                            # Frontend (React + Vite)
 │   ├── App.jsx                     # Rotas da aplicação
+│   ├── App.css
 │   ├── main.jsx                    # Entry point React
+│   ├── index.css                   # Estilos globais, Tailwind e DaisyUI
+│   ├── assets/                     # Imagens importadas pelo código
 │   ├── constants/
 │   │   └── routes.js               # Caminhos das rotas (fonte única)
 │   ├── context/
@@ -128,26 +132,37 @@ task_manager/
 │   │   ├── profile.jsx
 │   │   ├── account.jsx
 │   │   └── completed-tasks.jsx
+│   ├── services/                   # Chamadas HTTP à API
+│   │   └── task-service.js
 │   └── components/
 │       ├── header.jsx
 │       ├── footer.jsx
 │       ├── user-menu.jsx
 │       ├── task-card.jsx
 │       ├── toast-message.jsx
-│       ├── date-field.jsx          # Campo de data integrado ao React Hook Form
+│       ├── date-field.jsx          # Exibição de uma data com label
+│       ├── date-selector.jsx       # Input de data integrado ao React Hook Form
 │       ├── modals/                 # Modais reutilizáveis
 │       │   ├── register-form-modal.jsx
 │       │   ├── edit-image-modal.jsx
 │       │   ├── edit-password-modal.jsx
+│       │   ├── edit-task-modal.jsx
 │       │   ├── delete-account-modal.jsx
 │       │   └── task-details-modal.jsx
 │       └── task-book/              # Módulo de tarefas
+│           ├── constants/
+│           │   └── task-book-tabs.js  # Configuração das abas
 │           ├── task-book.jsx
 │           ├── new-task.jsx
+│           ├── overdue-tasks.jsx
 │           └── task-list.jsx
 │
+├── .claude/agents/                 # Agente de revisão de código
 ├── public/                         # Assets estáticos
 ├── rules/                          # Regras para o agente de IA
+├── .prettierrc                     # Configuração do Prettier
+├── eslint.config.js                # Configuração do ESLint
+├── index.html                      # HTML de entrada do Vite
 ├── package.json                    # Dependências do frontend
 └── vite.config.js
 ```
