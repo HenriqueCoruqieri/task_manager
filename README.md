@@ -22,11 +22,11 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 
 - **Autenticação** — cadastro de usuário, login com JWT e logout
 - **CRUD de tarefas** — criar, listar, editar, excluir e marcar como concluída
-- **Tarefas atrasadas** — aba que lista as tarefas não concluídas com vencimento já passado
+- **Tarefas atrasadas** — aba separada para as tarefas não concluídas com vencimento já passado, com contador de atrasos
 - **Filtro por usuário** — cada usuário visualiza apenas suas próprias tarefas
 - **Perfil** — upload de foto (Base64), troca de senha com hash no servidor
 - **Conta** — exclusão em cascata (tarefas do usuário são removidas junto com a conta)
-- **Validação de formulários** — regras no cliente com Zod + React Hook Form
+- **Validação de formulários** — regras no cliente com Zod + React Hook Form, incluindo o bloqueio de datas passadas em novas tarefas
 - **Feedback visual** — toasts de sucesso/erro e modais nativos (`<dialog>`)
 
 ---
@@ -124,6 +124,7 @@ task_manager/
 │   ├── context/
 │   │   └── user-context.jsx        # Estado global do usuário
 │   ├── hooks/
+│   │   ├── use-tasks.js            # Busca e estado das tarefas pendentes
 │   │   └── use-toast.js            # Estado e controle do ToastMessage
 │   ├── lib/
 │   │   └── dayjs.js                # Configuração do Day.js e helpers de data
@@ -143,6 +144,7 @@ task_manager/
 │       ├── toast-message.jsx
 │       ├── date-field.jsx          # Exibição de uma data com label
 │       ├── date-selector.jsx       # Input de data integrado ao React Hook Form
+│       ├── field-error.jsx         # Mensagem de erro de campo, sem deslocar o layout
 │       ├── modals/                 # Modais reutilizáveis
 │       │   ├── register-form-modal.jsx
 │       │   ├── edit-image-modal.jsx
