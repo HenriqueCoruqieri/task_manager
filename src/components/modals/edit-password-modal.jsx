@@ -46,7 +46,7 @@ const EditPasswordModal = ({ dialogRef, onSave }) => {
         </div>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(event) => handleSubmit(onSubmit)(event)}
           className="flex flex-col space-y-6"
           noValidate
         >
