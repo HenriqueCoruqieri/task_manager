@@ -89,7 +89,7 @@ const NewTask = ({setTasks}) => {
             <FieldError error={errors.description} />
           </div>
 
-          <div className="flex space-x-4 items-center justify-center">
+          <div className="flex items-center justify-center gap-4">
             <DateSelector label="Abertura" register={register("opening_date")} error={errors.opening_date} />
             <DateSelector label="Vencimento" register={register("expiration_date")} error={errors.expiration_date} />
           </div>

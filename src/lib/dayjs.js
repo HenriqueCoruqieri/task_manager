@@ -16,3 +16,6 @@ export const isBeforeDate = (date, dateToCompare) =>
 
 export const formatDisplayDate = (date) =>
     dayjs.utc(date).format(OUTPUT_DATE_FORMAT)
+
+export const formatInputDate = (date) =>
+    dayjs.utc(date).format(INPUT_DATE_FORMAT)

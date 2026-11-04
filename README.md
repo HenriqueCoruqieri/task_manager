@@ -238,13 +238,13 @@ Base URL: `http://localhost:8000`
 
 ### Tarefas — `/tasks`
 
-| Método   | Rota         | Descrição                                            |
-| -------- | ------------ | ---------------------------------------------------- |
-| `GET`    | `/tasks`     | Lista tarefas (`?user_id=` para filtrar por usuário) |
-| `GET`    | `/tasks/:id` | Busca tarefa por ID                                  |
-| `POST`   | `/tasks`     | Cria nova tarefa                                     |
-| `PATCH`  | `/tasks/:id` | Atualiza título, descrição ou `isCompleted`          |
-| `DELETE` | `/tasks/:id` | Remove tarefa                                        |
+| Método   | Rota         | Descrição                                               |
+| -------- | ------------ | ------------------------------------------------------- |
+| `GET`    | `/tasks`     | Lista tarefas (`?user_id=` para filtrar por usuário)    |
+| `GET`    | `/tasks/:id` | Busca tarefa por ID                                     |
+| `POST`   | `/tasks`     | Cria nova tarefa                                        |
+| `PATCH`  | `/tasks/:id` | Att título, descrição, ou expiration_date`isCompleted`  |
+| `DELETE` | `/tasks/:id` | Remove tarefa                                           |
 
 ---
 

@@ -29,7 +29,7 @@ const TaskDetailsModal = ({ dialogRef, task }) => {
           </button>
         </div>
         
-        <p className="text-sm whitespace-pre-wrap break-words max-h-[60vh] scrollbar-dark pr-2">
+        <p className="text-sm whitespace-pre-wrap wrap-break max-h-[60vh] scrollbar-dark pr-2">
           {task?.description}
         </p>
       </div>
