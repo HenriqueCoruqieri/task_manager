@@ -4,7 +4,7 @@ const JSON_HEADERS = { "Content-Type" : "application/json" }
 
 export const changePassword = (userId, password) =>
     fetch(`${USER_URL}/${userId}`, {
-        method: "POST",
+        method: "PATCH",
         headers: JSON_HEADERS,
         body: JSON.stringify({password}),
     })

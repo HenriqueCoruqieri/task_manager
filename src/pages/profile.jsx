@@ -4,12 +4,10 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import EditImageModal from "../components/modals/edit-image-modal"
-
+import { Camera } from "lucide-react"
 
 import { useUser } from "../context/user-context"
-
-
-import { Camera } from "lucide-react"
+import { changeProfileimage } from "../services/profile-service"
 
 const Profile = () => {
   
@@ -19,12 +17,7 @@ const Profile = () => {
 
   const handleChangeImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
-
-    const response = await fetch(`http://localhost:8000/user/${userId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image_url: imageUrl }),
-    })
+    const response = await changeProfileimage(userId, imageUrl)
 
     if (response.ok) {
       const updatedUser = await response.json()
@@ -36,8 +29,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      
+    <div className="flex flex-col min-h-screen"> 
       <Header />
       <UserMenu />
 
