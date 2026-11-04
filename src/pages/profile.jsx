@@ -7,7 +7,7 @@ import EditImageModal from "../components/modals/edit-image-modal"
 import { Camera } from "lucide-react"
 
 import { useUser } from "../context/user-context"
-import { changeProfileimage } from "../services/profile-service"
+import { updateUser } from "../services/user-service"
 
 const Profile = () => {
   
@@ -17,7 +17,7 @@ const Profile = () => {
 
   const handleChangeImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
-    const response = await changeProfileimage(userId, imageUrl)
+    const response = await updateUser(userId, {image_url: imageUrl})
 
     if (response.ok) {
       const updatedUser = await response.json()

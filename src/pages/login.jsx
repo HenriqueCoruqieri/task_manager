@@ -12,6 +12,7 @@ import { useUser } from "../context/user-context"
 import ToastMessage from "../components/toast-message"
 import { useToast } from "../hooks/use-toast"
 import FieldError from "../components/field-error"
+import { createUser, loginUser } from "../services/user-service"
 
 const schema = z.object({
   email: z.email({ message: "Email inválido!" }),
@@ -33,11 +34,7 @@ const Login = () => {
   } = useForm({ resolver: zodResolver(schema) })
 
   const onSubmit = async (data) => {
-    const response = await fetch("http://localhost:8000/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
+    const response = await loginUser(data)
 
     if (response.ok) {
       const { token, username, id } = await response.json()
@@ -51,15 +48,11 @@ const Login = () => {
   }
 
   const handleRegister = async (data) => {
-    const response = await fetch("http://localhost:8000/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        password: data.password,
-      }),
+    const response = await createUser({
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      password: data.password
     })
 
     if (response.ok) {

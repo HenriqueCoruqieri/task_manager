@@ -7,9 +7,9 @@ import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import DeleteAccountModal from "../components/modals/delete-account-modal"
 import { useToast } from "../hooks/use-toast"
-import { changePassword, deleteAccount } from "../services/account-service"
 import EditPasswordModal from "../components/modals/edit-password-modal"
 import ToastMessage from "../components/toast-message"
+import { deleteUser, updateUser } from "../services/user-service"
 
 const Account = () => {
   const {toast, showToast, dismissToast} = useToast()
@@ -19,7 +19,7 @@ const Account = () => {
 
   const handleChangePassword = async (password) => {
     const userId = localStorage.getItem("userId")
-    const response = await changePassword(userId, password)
+    const response = await updateUser(userId, { password })
 
     if(response.ok){
       showToast("Senha alterada com sucesso!", "success")
@@ -31,7 +31,7 @@ const Account = () => {
 
   const handleDeleteAccount = async () => {
     const userId = localStorage.getItem("userId")
-    const response = await deleteAccount(userId)
+    const response = await deleteUser(userId)
 
     if (response.ok) {
       localStorage.removeItem("token")

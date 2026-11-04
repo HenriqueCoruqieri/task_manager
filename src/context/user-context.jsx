@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { getUser } from "../services/user-service"
 
 const UserContext = createContext(null)
 
@@ -12,7 +13,7 @@ export const UserProvider = ({ children }) => {
       return
     }
 
-    const response = await fetch(`http://localhost:8000/user/${userId}`)
+    const response = await getUser(userId)
 
     if (!response.ok) {
       const error = await response.text()
