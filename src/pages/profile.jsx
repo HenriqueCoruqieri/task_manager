@@ -4,18 +4,18 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import UserMenu from "../components/user-menu"
 import EditImageModal from "../components/modals/edit-image-modal"
-import EditPasswordModal from "../components/modals/edit-password-modal"
-import ToastMessage from "../components/toast-message"
+
+
 import { useUser } from "../context/user-context"
-import { useToast } from "../hooks/use-toast"
+
 
 import { Camera } from "lucide-react"
 
 const Profile = () => {
-  const { toast, showToast, dismissToast } = useToast()
+  
   const { userData, setUserData } = useUser()
   const imageDialogRef = useRef(null)
-  const passwordDialogRef = useRef(null)
+  
 
   const handleChangeImage = async (imageUrl) => {
     const userId = localStorage.getItem("userId")
@@ -35,30 +35,9 @@ const Profile = () => {
     }
   }
 
-  const handleChangePassword = async (password) => {
-    const userId = localStorage.getItem("userId")
-    const response = await fetch(`http://localhost:8000/user/${userId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    })
-
-    if (response.ok) {
-      showToast("Senha alterada com sucesso!", "success")
-    } else {
-      const error = await response.json()
-      console.error(error)
-    }
-  }
-
   return (
     <div className="flex flex-col min-h-screen">
-      <ToastMessage
-        visible={toast.visible}
-        message={toast.message}
-        type={toast.type}
-        onDismiss={dismissToast}
-      />
+      
       <Header />
       <UserMenu />
 
@@ -89,23 +68,9 @@ const Profile = () => {
             </div>
           )}
         </div>
-
-        <div className="mt-4">
-          <button
-            className="btn btn-success"
-            onClick={() => passwordDialogRef.current.showModal()}
-          >
-            Trocar senha
-          </button>
-        </div>
       </div>
 
       <EditImageModal dialogRef={imageDialogRef} onSave={handleChangeImage} />
-      <EditPasswordModal
-        dialogRef={passwordDialogRef}
-        onSave={handleChangePassword}
-      />
-
       <Footer />
     </div>
   )

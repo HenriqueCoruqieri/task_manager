@@ -80,7 +80,7 @@ const TaskList = ({tasks, setTasks, title = "Lista de Tarefas", filterTasks = is
       <p className="text-xs opacity-60 tracking-wide ml-14 p-4 pb-2">
         {title}
       </p>
-      <ul className="list rounded-box flex-1 min-h-0 scrollbar-dark pr-2 mt-1 space-y-4">
+      <ul className="list rounded-box max-h-74 scrollbar-dark pr-2 mt-1 space-y-4"> 
         {visibleTasks.map((task, index) => (
           <li key={task._id} className="flex items-center gap-4">
             <button
