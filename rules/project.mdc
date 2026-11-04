@@ -38,9 +38,12 @@ Novos arquivos e pastas: **kebab-case**. Componentes React: export default com n
 - Roteamento em `App.jsx` com `BrowserRouter` + `Routes`.
 - Estado global do usuário via `UserContext` (`useUser()` → `userData`, `setUserData`, `fetchUser`).
 - Autenticação: `localStorage` guarda `token` e `userId`. Logout limpa ambos.
-- Chamadas HTTP com **`fetch` nativo** — base URL `http://localhost:8000`.
-- Mapear camelCase do formulário para snake_case da API (ex: `firstName` → `first_name`).
-- Datas: usar os helpers de `src/lib/dayjs.js` (`getToday`, `isBeforeDate`, `formatDisplayDate`). Não importar `dayjs` diretamente nos componentes nem criar datas com `new Date()`.
+- Chamadas HTTP com **`fetch` nativo**, somente em `src/services/`. Nunca chamar `fetch` em páginas, componentes, hooks ou contextos.
+- Um service por recurso da API (`task-service.js` → `/tasks`, `user-service.js` → `/user`). Base URL: `http://localhost:8000`.
+- Funções de service só fazem a requisição e retornam a `Response`. Quem as chama trata `response.ok`, toast e estado.
+- Mapear camelCase do formulário para snake_case da API (ex: `firstName` → `first_name`) em quem chama o service.
+- Datas: usar os helpers de `src/lib/dayjs.js` (`getToday`, `isBeforeDate`, `isOverdue`, `formatDisplayDate`). Não importar `dayjs` diretamente nos componentes nem usar `new Date()` na lógica de datas.
+- Datas vindas da API são meia-noite UTC: para exibir, usar `formatDisplayDate`; para saber se a tarefa está atrasada, usar `isOverdue`. `isBeforeDate` é para comparar datas do formulário (`YYYY-MM-DD`).
 
 ### Rotas do frontend
 
@@ -68,10 +71,10 @@ const { register, handleSubmit, formState: { errors }, reset } =
   useForm({ resolver: zodResolver(schema) })
 
 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-  <input {...register("campo")} className="input input-bordered w-full" />
-  {errors.campo && (
-    <p className="text-error text-sm mt-1">{errors.campo.message}</p>
-  )}
+  <div className="relative">
+    <input {...register("campo")} className="input input-bordered w-full" />
+    <FieldError error={errors.campo} />
+  </div>
 </form>
 ```
 
@@ -80,6 +83,9 @@ const { register, handleSubmit, formState: { errors }, reset } =
 - Usar `.refine()` para validações cruzadas (ex: confirmar senha).
 - Após sucesso, chamar `reset()` quando apropriado.
 - Atributo `noValidate` no `<form>` para desabilitar validação nativa do browser.
+- Erros de campo sempre com `FieldError`, dentro de um elemento `relative`. Ele é posicionado com `absolute`, então o formulário não muda de tamanho quando o erro aparece.
+- Em elementos com `FieldError`, usar `flex flex-col gap-*` em vez de `space-y-*`, que adicionaria margem ao input quando o erro aparece.
+- Se o `onSubmit` usar um ref diretamente (ex: `dialogRef.current.close()`), passar `onSubmit={(event) => handleSubmit(onSubmit)(event)}` no `<form>` para atender à regra `react-hooks/refs`.
 
 ## UI — Tailwind + DaisyUI
 
@@ -92,11 +98,14 @@ const { register, handleSubmit, formState: { errors }, reset } =
 
 ## Padrões de componentes
 
-- **Páginas** (`src/pages/`): orquestram layout e chamadas à API.
+- **Páginas** (`src/pages/`): orquestram layout e usam os services para falar com a API.
 - **Componentes** (`src/components/`): UI reutilizável, recebem dados via props.
-- **Modais** (`src/components/modals/`): recebem `dialogRef` e callback (`onSave`, `onConfirm`). Lógica de API fica na página pai.
+- **Modais** (`src/components/modals/`): recebem `dialogRef` e callback (`onSave`, `onConfirm`). A chamada ao service fica no componente pai.
+- **Services** (`src/services/`): chamadas HTTP, sem estado nem UI.
+- **Hooks** (`src/hooks/`): lógica de estado reutilizável (ex: `useToast`, `useTasks`).
+- **Módulo de tarefas** (`src/components/task-book/`): o `TaskBook` guarda as tarefas pendentes com `useTasks` e repassa `tasks` e `setTasks` à aba ativa. Abas ficam em `constants/task-book-tabs.js`. Novas listas reutilizam o `TaskList` com as props `title` e `filterTasks`.
 - Estado local com `useState`. Refs com `useRef` para modais.
-- `useEffect` para fetch inicial de dados (ex: listagem de tarefas).
+- `useEffect` para fetch inicial de dados, chamando um service (ex: `useTasks`).
 
 ## Convenções de código
 

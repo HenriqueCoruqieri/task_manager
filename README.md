@@ -13,8 +13,8 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 | Login / Cadastro   | Autenticação com validação de formulários |
 | Home               | Criação de tarefas e menu de navegação    |
 | Tarefas concluídas | Histórico de tarefas finalizadas          |
-| Perfil             | Foto de perfil e alteração de senha       |
-| Conta              | Exclusão de conta e dados associados      |
+| Perfil             | Dados do usuário e foto de perfil         |
+| Conta              | Alteração de senha e exclusão de conta    |
 
 ---
 
@@ -24,8 +24,8 @@ Aplicação full-stack para gerenciamento de tarefas pessoais. O usuário pode s
 - **CRUD de tarefas** — criar, listar, editar, excluir e marcar como concluída
 - **Tarefas atrasadas** — aba separada para as tarefas não concluídas com vencimento já passado, com contador de atrasos
 - **Filtro por usuário** — cada usuário visualiza apenas suas próprias tarefas
-- **Perfil** — upload de foto (Base64), troca de senha com hash no servidor
-- **Conta** — exclusão em cascata (tarefas do usuário são removidas junto com a conta)
+- **Perfil** — exibição dos dados do usuário e upload de foto (Base64)
+- **Conta** — troca de senha com hash no servidor e exclusão em cascata (tarefas do usuário são removidas junto com a conta)
 - **Validação de formulários** — regras no cliente com Zod + React Hook Form, incluindo o bloqueio de datas passadas em novas tarefas
 - **Feedback visual** — toasts de sucesso/erro e modais nativos (`<dialog>`)
 
@@ -135,7 +135,8 @@ task_manager/
 │   │   ├── account.jsx
 │   │   └── completed-tasks.jsx
 │   ├── services/                   # Chamadas HTTP à API
-│   │   └── task-service.js
+│   │   ├── task-service.js
+│   │   └── user-service.js
 │   └── components/
 │       ├── header.jsx
 │       ├── footer.jsx
