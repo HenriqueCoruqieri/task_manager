@@ -122,7 +122,8 @@ task_manager/
 │   ├── constants/
 │   │   └── routes.js               # Caminhos das rotas (fonte única)
 │   ├── context/
-│   │   └── user-context.jsx        # Estado global do usuário
+│   │   ├── user-context.js         # Contexto e hook useUser
+│   │   └── user-provider.jsx       # Estado global do usuário
 │   ├── hooks/
 │   │   ├── use-tasks.js            # Busca e estado das tarefas pendentes
 │   │   └── use-toast.js            # Estado e controle do ToastMessage
