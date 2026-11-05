@@ -91,7 +91,10 @@ const { register, handleSubmit, formState: { errors }, reset } =
 
 - Tailwind configurado via `@import "tailwindcss"` e `@plugin "daisyui"` em `src/index.css`.
 - Sempre usar classes DaisyUI para componentes.
-- Cor principal do tema: **emerald** (`emerald-500`, `emerald-600`, `btn-success`, `text-emerald-500`).
+- Cores somente pelos tokens do tema DaisyUI (`primary`, `primary-content`, `base-*`, `success`, `error`, `warning`). Ex: `text-primary`, `bg-primary`, `border-primary`, `btn-primary`. Nunca usar cores da paleta direto nas classes (ex: `text-emerald-500`, `text-white`).
+- Os tokens não têm tons: `ring-primary-600` não existe. Para variações, usar opacidade (`hover:bg-primary/80`) ou criar um novo token no tema.
+- O tema é definido em `src/index.css` com `@plugin "daisyui/theme"` (`name: "dark"`, `default: true`, `prefersdark: true`), então o app é sempre escuro. Para mudar uma cor, alterar só o token nesse arquivo.
+- Cor principal: **emerald** (`--color-primary`). Usar `primary` para a marca e ações principais; `success` e `error` só para feedback (toasts, alerts).
 - Ícones exclusivamente de **lucide-react**.
 - Modais: elemento HTML `<dialog>` com `ref`, abrir via `ref.current.showModal()`, fechar via `ref.current.close()`. Incluir `<form method="dialog" className="modal-backdrop">` para fechar ao clicar fora.
 - Feedback: componente `ToastMessage` com props `{ visible, message, type, onDismiss }`. Tipos: `"success"` ou `"error"`. Auto-dismiss em 3 segundos.

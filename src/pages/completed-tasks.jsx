@@ -28,10 +28,10 @@ const CompletedTasks = () => {
       <div className="flex flex-1 justify-center items-center">
         <div className="bg-black w-137.5 rounded-3xl p-6">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold text-white text-center">
+            <h1 className="text-3xl font-bold text-primary-content text-center">
               Tarefas Concluídas
             </h1>
-            <SquareCheckBig className="mt-2 text-emerald-500" />
+            <SquareCheckBig className="mt-2 text-primary" />
           </div>
           <ul className="list rounded-box space-y-4 max-h-[60vh] overflow-y-auto pr-2 w-full max-w-125  mt-4">
             {tasks.map((task, index) => (

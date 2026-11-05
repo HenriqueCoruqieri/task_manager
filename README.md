@@ -117,7 +117,7 @@ task_manager/
 │   ├── App.jsx                     # Rotas da aplicação
 │   ├── App.css
 │   ├── main.jsx                    # Entry point React
-│   ├── index.css                   # Estilos globais, Tailwind e DaisyUI
+│   ├── index.css                   # Estilos globais, Tailwind e tema DaisyUI (tokens de cor)
 │   ├── assets/                     # Imagens importadas pelo código
 │   ├── constants/
 │   │   └── routes.js               # Caminhos das rotas (fonte única)
@@ -339,6 +339,7 @@ O frontend estará disponível em `http://localhost:5173`.
 - **Validação em duas camadas** — Zod no frontend para UX imediata; regras de campos permitidos nos controllers do backend para segurança básica em updates.
 - **Context API** — `UserContext` evita prop drilling e centraliza o fetch dos dados do usuário logado.
 - **Modais nativos** — uso do elemento HTML `<dialog>` com DaisyUI, sem dependência de biblioteca de modal.
+- **Cores por tokens do tema** — as cores ficam centralizadas em um tema do DaisyUI em `src/index.css` (`primary`, `primary-content`...), e os componentes usam só esses tokens (`text-primary`, `bg-primary`). Para mudar a identidade visual, basta alterar o tema.
 - **Foto de perfil em Base64** — imagem convertida no cliente e armazenada como string no MongoDB (limite de 2 MB no upload).
 - **JWT com jose** — token gerado no login com expiração de 1 dia; armazenado no `localStorage` do navegador.
 

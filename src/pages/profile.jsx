@@ -36,7 +36,7 @@ const Profile = () => {
       <div className="flex flex-1 flex-col items-center justify-center">
         <div className="flex  mr-55">
           <button
-            className="btn btn-circle text-emerald-500 shadow-2xl"
+            className="btn btn-circle text-primary shadow-2xl"
             onClick={() => imageDialogRef.current.showModal()}
           >
             <Camera />
@@ -44,7 +44,7 @@ const Profile = () => {
         </div>
 
         <div className="avatar">
-          <div className="w-24 rounded-xl min-w-40 min-h-55 border-emerald-500 border-2">
+          <div className="w-24 rounded-xl min-w-40 min-h-55 border-primary border-2">
             <img src={userData?.image_url || "/default_profile.png"} />
           </div>
         </div>

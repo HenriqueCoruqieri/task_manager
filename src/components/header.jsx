@@ -17,7 +17,7 @@ const Header = () => {
   }
 
   return (
-    <div className="navbar bg-emerald-600 shadow-sm">
+    <div className="navbar bg-primary shadow-sm">
       <div className="navbar-start">
         <Link to={generatePath(ROUTES.home, { username })} className="btn btn-ghost text-xl">
           Home

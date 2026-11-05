@@ -18,13 +18,13 @@ const TaskBook = () => {
         {TABS.map(({ id, label, icon: Icon}) => (
           <a 
           key={id} 
-          className={`tab gap-2 font-bold ${activeView == id? "tab-active text-emerald-500" : "text-white"}`}
+          className={`tab gap-2 font-bold ${activeView == id? "tab-active text-primary" : "text-primary-content"}`}
           onClick={() => setActiveView(id)}
           >
           <Icon className="size-4"/>
           {label}
           {id === "overdue-task" && overdueCount > 0 && (
-            <span className="badge badge-error badge-xs absolute -top-1 -right-1 text-white">
+            <span className="badge badge-error badge-xs absolute -top-1 -right-1 text-primary-content">
               {overdueCount}
             </span>
           )}

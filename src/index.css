@@ -1,9 +1,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+  prefersdark: true;
+  --color-primary: oklch(79.2% 0.209 151.711);
+  --color-primary-content: oklch(100% 0 0);
+}
+
 @utility scrollbar-dark {
   overflow-y: auto;
   color-scheme: dark;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-emerald-500) transparent;
+  scrollbar-color: var(--color-primary) transparent;
 }

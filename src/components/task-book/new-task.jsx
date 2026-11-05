@@ -67,24 +67,24 @@ const NewTask = ({setTasks}) => {
           noValidate
         >
           <div className="relative flex flex-col gap-1">
-            <h2 className="card-title card-actions text-emerald-500">
+            <h2 className="card-title card-actions text-primary">
               Título da Tarefa
             </h2>
             <input
               {...register("title")}
               type="text"
-              className="input input-sm w-full border border-emerald-500"
+              className="input input-sm w-full border border-primary"
             />
             <FieldError error={errors.title} />
           </div>
 
           <div className="relative flex flex-col gap-1">
-            <h2 className="card-title card-actions text-emerald-500">
+            <h2 className="card-title card-actions text-primary">
               Descrição
             </h2>
             <textarea
               {...register("description")}
-              className="textarea textarea-sm w-full h-20 resize-none scrollbar-dark border border-emerald-500 leading-normal"
+              className="textarea textarea-sm w-full h-20 resize-none scrollbar-dark border border-primary leading-normal"
             />
             <FieldError error={errors.description} />
           </div>
@@ -97,7 +97,7 @@ const NewTask = ({setTasks}) => {
           <div className="justify-center card-actions mt-6">
             <button
               type="submit"
-              className="btn btn-success min-w-37.5 text-white"
+              className="btn btn-primary min-w-37.5 text-primary-content"
             >
               Criar
             </button>

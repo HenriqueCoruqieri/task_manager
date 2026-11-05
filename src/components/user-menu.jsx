@@ -11,12 +11,12 @@ const UserMenu = () => {
       <details className="dropdown flex p-6">
         <summary className="btn btn-circle">
           <div className="avatar gap-2">
-            <div className="ring-emerald-600 ring-offset-base-100 w-14 rounded-full ring-2 ring-offset-2">
+          <div className="ring-primary ring-offset-base-100 w-14 rounded-full ring-2">
               <img src={userData?.image_url || "/default_profile.png"} />
             </div>
           </div>
         </summary>
-        <ul className="menu dropdown-content font-semibold bg-emerald-600 z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
+        <ul className="menu dropdown-content font-semibold bg-primary z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
           <li>
             <Link to={generatePath(ROUTES.profile, { username })}>Perfil</Link>
           </li>
@@ -33,7 +33,7 @@ const UserMenu = () => {
 
       <div className="mt-4">
         {userData && (
-          <h1 className="text-white font-bold">
+          <h1 className="text-primary-content font-bold">
             {userData.first_name} {userData.last_name}
           </h1>
         )}

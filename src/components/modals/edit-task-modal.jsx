@@ -97,7 +97,7 @@ const EditTaskModal = ({dialogRef, task, onSave}) => {
 
             <button
               type="submit"
-              className="btn btn-success text-white rounded-full mt-2"
+              className="btn btn-primary text-primary-content rounded-full mt-2"
             >
               Salvar
             </button>

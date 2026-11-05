@@ -54,19 +54,19 @@ const Account = () => {
       <Header />
       <UserMenu />
       <div className="flex flex-1 flex-col items-center justify-center mb-40">
-        <h1 className="text-emerald-500 font-bold text-3xl shadow-3xl">
+        <h1 className="text-primary font-bold text-3xl shadow-3xl">
           Configurações de Conta
         </h1>
         <div className="flex gap-2 mt-12">
           <button
-            className="btn btn-success"
+            className="btn btn-primary"
             onClick={() => passwordDialogRef.current.showModal()}
           >
             Trocar Senha
           </button>
 
           <button
-            className="btn btn-success"
+            className="btn btn-primary"
             onClick={() => deleteAccountDialogRef.current.showModal()}
           >
             Deletar Conta

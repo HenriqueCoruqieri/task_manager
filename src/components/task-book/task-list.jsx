@@ -116,7 +116,7 @@ const TaskList = ({tasks, setTasks, title = "Lista de Tarefas", filterTasks = is
       <div className="flex mt-4 justify-center">
         <button
           disabled={selectedTask.length === 0}
-          className="btn btn-success rounded-md w-37.5"
+          className="btn btn-primary rounded-md w-37.5"
           onClick={handleComplete}
         >
           Concluir

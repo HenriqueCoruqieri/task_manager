@@ -111,7 +111,7 @@ const Login = () => {
         <div className="flex flex-col space-y-2 mt-8">
           <button
             type="submit"
-            className="btn btn-success border-4 border-solid w-100 rounded-full text-white"
+            className="btn btn-primary border-4 border-solid w-100 rounded-full text-primary-content"
           >
             Login
           </button>

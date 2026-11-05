@@ -20,14 +20,14 @@ const DeleteAccountModal = ({ dialogRef, onConfirm }) => {
         <div className="flex justify-end gap-2">
           <button
             type="button"
-            className="btn btn-success w-18 rounded-full shadow-xl"
+            className="btn btn-primary w-18 rounded-full shadow-xl"
             onClick={() => dialogRef.current.close()}
           >
             Sair
           </button>
           <button
             type="button"
-            className="btn btn-error w-18 text-white rounded-full"
+            className="btn btn-error w-18 text-primary-content rounded-full"
             onClick={onConfirm}
           >
             Apagar
