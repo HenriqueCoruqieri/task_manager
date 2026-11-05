@@ -120,7 +120,8 @@ task_manager/
 │   ├── index.css                   # Estilos globais, Tailwind e tema DaisyUI (tokens de cor)
 │   ├── assets/                     # Imagens importadas pelo código
 │   ├── constants/
-│   │   └── routes.js               # Caminhos das rotas (fonte única)
+│   │   ├── routes.js               # Caminhos das rotas (fonte única)
+│   │   └── user-menu-items.js      # Itens do menu do usuário
 │   ├── context/
 │   │   ├── user-context.js         # Contexto e hook useUser
 │   │   └── user-provider.jsx       # Estado global do usuário

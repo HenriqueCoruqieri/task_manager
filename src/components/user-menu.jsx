@@ -1,6 +1,6 @@
 import { Link, useParams, generatePath } from "react-router-dom"
 import { useUser } from "../context/user-context"
-import { ROUTES } from "../constants/routes"
+import { MENU_ITEMS } from "../constants/user-menu-items"
 
 const UserMenu = () => {
   const { username } = useParams()
@@ -16,19 +16,18 @@ const UserMenu = () => {
             </div>
           </div>
         </summary>
-        <ul className="menu dropdown-content font-semibold bg-primary z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
-          <li>
-            <Link to={generatePath(ROUTES.profile, { username })}>Perfil</Link>
-          </li>
-          <li>
-            <Link to={generatePath(ROUTES.account, { username })}>Conta</Link>
-          </li>
-          <li>
-            <Link to={generatePath(ROUTES.completedTasks, { username })}>
-              Tarefas concluídas
-            </Link>
-          </li>
-        </ul>
+        <ul className="dropdown-content flex flex-col gap-1 font-semibold bg-primary z-1 w-52 ml-4 mt-6 p-2 rounded-box shadow-sm">
+          {MENU_ITEMS.map(({ label, route }) => (
+          <li key={route}>
+          <Link
+          to={generatePath(route, { username })}
+          className="btn btn-ghost w-full justify-start"
+          >
+            {label}
+          </Link>
+    </li>
+  ))}
+</ul>
       </details>
 
       <div className="mt-4">

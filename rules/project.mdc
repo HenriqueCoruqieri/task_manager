@@ -59,6 +59,8 @@ Páginas autenticadas usam layout com `Header`, `UserMenu` e `Footer`.
 
 - Caminhos definidos somente em `src/constants/routes.js` (`ROUTES`). Nunca escrever o caminho como string solta: usar `ROUTES.x` no `<Route>` e `generatePath(ROUTES.x, { username })` em `Link`/`navigate`.
 - Caso necessário criar uma nova rota, adicione-a em `ROUTES` seguindo o padrão `/:username/home/nome-da-nova-rota`.
+- Links do menu do usuário ficam em `src/constants/user-menu-items.js` (`MENU_ITEMS`, com `label` e `route`). Para adicionar uma página ao menu, acrescente um item nessa lista. O `UserMenu` renderiza os itens com `.map()`, usando `btn btn-ghost`, o mesmo estilo dos botões do `Header`.
+- Listas de navegação ou de opções repetidas devem virar um array de configuração com `.map()`, como `MENU_ITEMS` e `TABS`, em vez de JSX repetido.
 
 ## Formulários (React Hook Form + Zod)
 
